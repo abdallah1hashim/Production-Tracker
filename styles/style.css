@@ -1,0 +1,28 @@
+/* global Rules */
+body {
+  font-family: "Rubik", sans-serif;
+}
+p {
+  margin: 0;
+}
+html {
+  scroll-behavior: smooth;
+}
+/* Componnent */
+
+/* Nav */
+nav {
+  background-color: #313338;
+  color: white;
+}
+nav .container {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.logo {
+  width: 50px;
+}
+nav img {
+  max-width: 100%;
+}

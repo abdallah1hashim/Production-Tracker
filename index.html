@@ -1,25 +1,40 @@
 <!DOCTYPE html>
-<html>
-  <head lang="en-US">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700;900&display=swap" rel="stylesheet">
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Google  fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Styles -->
+    <link rel="stylesheet" href="/styles/all.min.css" />
+    <link rel="stylesheet" href="/styles/normalize.css" />
+    <link rel="stylesheet" href="/styles/bootstrap.min.css" />
+    <link rel="stylesheet" href="/styles/style.css" />
 
-    <link rel="stylesheet" href="sty"> 
-    <title>Room 9</title>
+    <title>ROOM 9</title>
   </head>
   <body>
     <nav>
-      <p>Log in to get started</p>
-      <div class="logo">
+      <div class="container">
+        <p class="greating">Log in to Get on</p>
+        <div class="logo">
+          <img src="/assets/pics/logo-no-background.webp" alt="logo" />
+        </div>
+        <form class="login">
+          <input type="text" placeholder="user name" />
+          <input type="password" placeholder="pin" />
+          <button class="log"></button>
+        </form>
       </div>
-      <form>
-        <input class="input" type="user">
-        <input class="input" type="password">
-        <button></button>
-      </form>
     </nav>
+
+    <script src="script/all.min.js"></script>
+    <script src="script/bootstrap.bundle.min.js"></script>
+    <script src="script/script.js"></script>
   </body>
 </html>
