@@ -68,9 +68,10 @@ nav input {
 /* main */
 main {
   padding-top: 50px;
+  min-height: calc(100vh - 58px);
 }
 
-.welcome {
+main .welcome {
   display: flex;
   justify-content: space-between;
 }
@@ -90,13 +91,15 @@ main {
 }
 
 .app {
-  gap: 30px
+  gap: 30px;
 }
 
 .app .info {
   flex-direction: column;
   gap: 5px;
   background-color: white;
+  padding: 25px;
+  width: 50%;
 }
 
 .app .date {
@@ -108,15 +111,21 @@ main {
 }
 
 .app .spl {
-  background-image: linear-gradient(to top left, #ffb003, #ffcb03);
+  background-image: linear-gradient(to top left, #39b385, #9be15d);
 }
 
 .app .submit {
-  background-image: linear-gradient(to top left, #39b385, #9be15d);
+  background-image: linear-gradient(to top left, #ffb003, #ffcb03);
 }
 
 .app .production-hrs {
   background-image: linear-gradient(to top left, #e52a5a, #ff585f);
+}
+
+.app .user__numbers {
+  color: white;
+  text-align: center;
+  font-size: 60px;
 }
 
 .user__details {
@@ -131,7 +140,7 @@ main {
   border-radius: 5px;
   padding: 10px;
   margin: 10px 0;
-  border-color: #E76F51;
+  border-color: #e76f51;
   background-color: rgba(231, 111, 81, 0.1);
   transition: 0.3s;
 }
@@ -139,4 +148,19 @@ main {
 .app .note:hover {
   background-color: red;
   color: white;
+}
+
+/* Room details */
+
+.room__details {
+  width: 55%;
+  background-color: white;
+  border-radius: 5px;
+}
+
+/* footer */
+footer {
+  text-align: center;
+  color: var(--light-color);
+  padding: 20px 20px 5px;
 }
