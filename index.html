@@ -1,71 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Google  fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Styles -->
+    <link rel="stylesheet" href="/styles/all.min.css" />
+    <link rel="stylesheet" href="/styles/normalize.css" />
+    <link rel="stylesheet" href="/styles/bootstrap.min.css" />
+    <link rel="stylesheet" href="/styles/style.css" />
+    <!-- scripts -->
+    <script defer src="script/all.min.js"></script>
+    <script defer src="script/bootstrap.bundle.min.js"></script>
+    <script defer src="script/spl.js"></script>
+    <script defer src="script/script.js"></script>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Google  fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;800;900&display=swap"
-    rel="stylesheet" />
-  <!-- Styles -->
-  <link rel="stylesheet" href="/styles/all.min.css" />
-  <link rel="stylesheet" href="/styles/normalize.css" />
-  <link rel="stylesheet" href="/styles/bootstrap.min.css" />
-  <link rel="stylesheet" href="/styles/style.css" />
-  <!-- scripts -->
-  <script defer src="script/all.min.js"></script>
-  <script defer src="script/bootstrap.bundle.min.js"></script>
-  <script defer src="script/spl.js"></script>
-  <script defer src="script/script.js"></script>
+    <title>ROOM 9</title>
+  </head>
 
-  <title>ROOM 9</title>
-</head>
-
-<body class="index-body">
-  <div class="overlay z-drop opacity-0">
-    <div class="form-con">
-      <form class="login">
-        <h3>Login</h3>
-        <div>
-          <input class="log__user" type="text" placeholder="username" />
-          <p class="wrng__id opacity-0">ID not found.</p>
-        </div>
-        <div>
-          <input class="log__pass" type="password" placeholder="pin" />
-          <p class="wrng__pass opacity-0">your pin is incorrect.</p>
-        </div>
-        <button class="log">
-          <i class="fa-solid fa-arrow-right-to-bracket"></i>
-        </button>
-      </form>
-      <div class="close__login">❌</div>
-    </div>
-  </div>
-  <nav>
-    <div class="container">
-      <p class="greating">Log in to get started</p>
-      <div class="logo">
-        <img src="/assets/pics/logo-no-background.webp" alt="logo" />
-      </div>
-      <button class="login-btn">Login</button>
-    </div>
-  </nav>
-  <main class="d-flex align-items-center p-0">
-    <div class="container">
-      <div class="welcome">
-        <h1>Room 9 Poduction Tracker</h1>
-        <div class="img__holder">
-          <img src="/assets/pics/8-bTniNGuczY85cuG-removebg.webp" />
-        </div>
+  <body class="index-body">
+    <div class="overlay z-drop opacity-0">
+      <div class="form-con">
+        <form class="login">
+          <h3>Login</h3>
+          <div>
+            <input class="log__user" type="text" placeholder="username" />
+            <p class="wrng__id opacity-0">ID not found.</p>
+          </div>
+          <div>
+            <input class="log__pass" type="password" placeholder="pin" />
+            <p class="wrng__pass opacity-0">your pin is incorrect.</p>
+          </div>
+          <button class="log">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i>
+          </button>
+        </form>
+        <div class="close__login">❌</div>
       </div>
     </div>
-  </main>
-
-  <footer>
-    <p>Made by Abdullah with ❤️</p>
-  </footer>
-</body>
-
+    <nav>
+      <div class="container">
+        <p class="greating">Log in to get started</p>
+        <div class="logo">
+          <img src="/assets/pics/logo-no-background.webp" alt="logo" />
+        </div>
+        <button class="login-btn">Login</button>
+        <button class="logout-btn hidden">Logout</button>
+      </div>
+    </nav>
+    <main class="d-flex align-items-center p-0">
+      <div class="container">
+        <div class="welcome">
+          <h1>Room 9 Poduction Tracker</h1>
+          <div class="img__holder">
+            <img src="/assets/pics/8-bTniNGuczY85cuG-removebg.webp" />
+          </div>
+        </div>
+      </div>
+    </main>
+    <div class="app flex-column hidden">
+      <div class="info d-flex justify-content-between">
+        <p class="device">DEVICE: C-01</p>
+        <p class="name">NAME: name</p>
+        <p class="id">ID: 132654</p>
+      </div>
+      <div class="date d-flex flex-row justify-content-center">
+        <select class="form-select" id="month" name="month">
+          <option value="">month</option>
+          <option value="November">November</option>
+          <option value="December">December</option>
+        </select>
+        <select class="form-select" id="day" name="day">
+          <option value="">day</option>
+          <option value="1">01</option>
+          <option value="2">02</option>
+          <option value="3">03</option>
+          <option value="4">04</option>
+          <option value="5">05</option>
+          <option value="6">06</option>
+          <option value="7">07</option>
+          <option value="8">08</option>
+          <option value="9">09</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+          <option value="14">14</option>
+          <option value="15">15</option>
+          <option value="16">16</option>
+          <option value="17">17</option>
+          <option value="18">18</option>
+          <option value="19">19</option>
+          <option value="20">20</option>
+          <option value="21">21</option>
+          <option value="22">22</option>
+          <option value="23">23</option>
+          <option value="24">24</option>
+          <option value="25">25</option>
+          <option value="26">26</option>
+          <option value="27">27</option>
+          <option value="28">28</option>
+          <option value="29">29</option>
+          <option value="30">30</option>
+          <option value="31">31</option>
+        </select>
+        <button class="search">Search</button>
+      </div>
+      <div class="all__details d-flex flex-row justify-content-between">
+        <div class="room__details"></div>
+        <div class="indi__details d-flex flex-column gap-5">
+          <div class="spl user__details">
+            <p class="user__label">Your SPL:</p>
+            <div class="user__spl user__numbers spl-con">0.16</div>
+            <p class="note">
+              ⚠️ you will recive deduction based on your avrage SPL if more than
+              0.00
+            </p>
+          </div>
+          <div class="submit user__details">
+            <p class="user__label">number of submit:</p>
+            <p class="num__submit user__numbers">0</p>
+          </div>
+          <div class="production-hrs user__details">
+            <p class="user__label">Your productive hours:</p>
+            <p class="productive__hours user__numbers">0.0</p>
+            <p class="note">
+              ⚠️ you should Target 6.5 hours per day to avoid any deduction
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <p>Made by Abdullah with ❤️</p>
+    </footer>
+  </body>
 </html>

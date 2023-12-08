@@ -83,7 +83,7 @@ nav button:hover {
   color: lightgreen;
 }
 
-.app-nav-btn {
+.logout-btn {
   border: 1px solid red;
   color: red;
 }
@@ -104,7 +104,11 @@ nav button:hover {
 
 .form-con {
   background: rgb(33, 40, 50);
-  background: linear-gradient(180deg, rgba(33, 40, 50, 1) 0%, rgba(23, 30, 40, 1) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(33, 40, 50, 1) 0%,
+    rgba(23, 30, 40, 1) 100%
+  );
   color: white;
   padding: 50px;
   border-radius: 30px;
@@ -148,7 +152,6 @@ form input {
   padding: 10px;
   cursor: pointer;
   font-size: 20px;
-
 }
 
 /* main */
@@ -180,8 +183,11 @@ main .welcome {
 .app {
   gap: 30px;
   transition: 0.3;
+  height: calc(100vh - 58px);
 }
-
+.hidden {
+  display: none;
+}
 .app .info {
   flex-direction: column;
   gap: 5px;
@@ -213,7 +219,6 @@ main .welcome {
 .app .user__numbers {
   color: white;
   text-align: center;
-  font-size: 60px;
 }
 
 .user__details {
@@ -251,4 +256,16 @@ footer {
   text-align: center;
   color: var(--light-color);
   padding: 20px 20px 5px;
+}
+
+.spl-con {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(1fr, 2fr));
+  gap: 20px;
+}
+.spl__item {
+  font-size: 22px;
+}
+.spl-label {
+  color: var(--light-color);
 }
