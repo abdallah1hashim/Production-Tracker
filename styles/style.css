@@ -8,6 +8,10 @@ body {
   background-color: #eee;
 }
 
+/* .index-body{
+  background: rgb(174,201,238);
+  background: radial-gradient(circle, rgba(174,201,238,1) 0%, rgba(200,215,240,1) 58%, rgba(148,187,233,0.2806372549019608) 100%);
+} */
 p,
 h1 {
   margin: 0;
@@ -18,12 +22,28 @@ html {
   scroll-behavior: smooth;
 }
 
+.container {
+  position: relative;
+}
+
 /* Componnent */
+.br-red {
+  border: 2px solid red;
+}
+
+.z-drop {
+  z-index: -10;
+}
+
+.z-pop {
+  z-index: 10;
+}
 
 /* Nav */
 nav {
   background-color: #313338;
   color: white;
+  position: relative;
 }
 
 nav .container {
@@ -39,6 +59,10 @@ nav p {
 
 .logo {
   width: 60px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 nav img {
@@ -46,23 +70,85 @@ nav img {
 }
 
 nav button {
+  padding: 5px 15px;
+  background-color: transparent;
+  color: var(--bs-blue);
+  border: 1px solid var(--bs-blue);
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+nav button:hover {
+  border-color: lightgreen;
+  color: lightgreen;
+}
+
+.app-nav-btn {
+  border: 1px solid red;
+  color: red;
+}
+
+/* form */
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #00000038;
+  transition: 0.3s;
+}
+
+.form-con {
+  background: rgb(33, 40, 50);
+  background: linear-gradient(180deg, rgba(33, 40, 50, 1) 0%, rgba(23, 30, 40, 1) 100%);
+  color: white;
+  padding: 50px;
+  border-radius: 30px;
+  max-width: 350px;
+  position: relative;
+}
+
+form p {
+  color: red;
+  padding: 0 5px;
+}
+
+form.login {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  position: relative;
+}
+
+form button {
   background-color: transparent;
   color: white;
   border: none;
   transition: 0.3s;
 }
 
-nav button:hover {
+form button:hover {
   color: var(--light-color);
 }
 
-nav input {
+form input {
   padding: 5px 15px;
   border-radius: 10px;
+  /* border: px solid black; */
 }
 
-.log__pass {
-  width: 60px;
+.close__login {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 20px;
+
 }
 
 /* main */
@@ -74,6 +160,7 @@ main {
 main .welcome {
   display: flex;
   justify-content: space-between;
+  transition: 0.3s;
 }
 
 .welcome h1 {
@@ -92,6 +179,7 @@ main .welcome {
 
 .app {
   gap: 30px;
+  transition: 0.3;
 }
 
 .app .info {
