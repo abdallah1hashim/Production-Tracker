@@ -157,7 +157,7 @@ form input {
 /* main */
 main {
   padding-top: 50px;
-  min-height: calc(100vh - 58px);
+  height: calc(100vh - 58px);
 }
 
 main .welcome {
@@ -183,7 +183,6 @@ main .welcome {
 .app {
   gap: 30px;
   transition: 0.3;
-  height: calc(100vh - 58px);
 }
 .hidden {
   display: none;

@@ -217,7 +217,21 @@ const spl6dec = [
     return cell !== 0 ? cell : "";
   });
 });
-console.log(spl26nov);
+const spl7dec = [
+  [0, 0.184895366, 0, 0],
+  [0.2460903906, 0, 0, 0],
+  [0, 0, 0, 0],
+  [0, 0, 0, 0],
+  [0, 0, 0, 0],
+  [0, 0, 0, 0],
+  [0.257119244, 0, 0, 0],
+  [0.1350283284, 0, 0, 0],
+  [0, 0, 0, 0],
+].map(function (row) {
+  return row.map(function (cell) {
+    return cell !== 0 ? cell : "";
+  });
+});
 const novSpl = {
   spl26: {
     month: `${months[10]}`,
@@ -230,7 +244,6 @@ const novSpl = {
     767152: spl26nov[6],
     804806: spl26nov[7],
     768174: spl26nov[8],
-    hm: this,
   },
   spl27: {
     month: `${months[10]}`,
@@ -354,8 +367,19 @@ const decSpl = {
     804806: spl6dec[7],
     768174: spl6dec[8],
   },
+  spl7: {
+    month: `${months[11]}`,
+    494032: spl7dec[0],
+    422386: spl7dec[1],
+    853578: spl7dec[2],
+    709791: spl7dec[3],
+    500995: spl7dec[4],
+    326976: spl7dec[5],
+    767152: spl7dec[6],
+    804806: spl7dec[7],
+    768174: spl7dec[8],
+  },
 };
 
 allSpl.November = novSpl;
 allSpl.December = decSpl;
-console.log(allSpl);

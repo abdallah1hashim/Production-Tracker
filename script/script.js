@@ -21,6 +21,8 @@ const dayInpt = document.querySelector("#day");
 const monthInpt = document.querySelector("#month");
 const spl = document.querySelector(".spl");
 const splCon = document.querySelector(".spl-con");
+const submit = document.querySelector(".num__submit");
+const proHours = document.querySelector(".productive__hours");
 //////////////////////////////////
 //////////////////////////////////
 //////////////////////////////////
@@ -174,6 +176,35 @@ function showSpl(m, d, id, el) {
     el.insertAdjacentElement("beforeend", div);
   });
 }
+
+const showSubmit = (m, d, id) => {
+  submit.innerHTML = "";
+
+  const i = ids.indexOf(id);
+  generalQueues.forEach((q) => {
+    if (allSumbit[m.value]["sub" + d.value][q][i] === 0) return;
+    const div = document.createElement("div");
+    div.classList.add("d-flex", "flex-column", "spl__item");
+    div.innerHTML = `
+      <p class="spl-label">${q}</p>
+      <p>${allSumbit[m.value]["sub" + d.value][q][i]}</p>
+    `;
+    submit.insertAdjacentElement("beforeend", div);
+  });
+};
+
+const showHours = (m, d, id) => {
+  proHours.innerHTML = "";
+
+  const i = ids.indexOf(id);
+  const div = document.createElement("div");
+
+  div.classList.add("d-flex", "flex-column", "spl__item");
+  div.innerHTML = `
+      <p>${allHours[m.value][d.value][i]}</p>
+    `;
+  proHours.insertAdjacentElement("beforeend", div);
+};
 // Events
 footer.addEventListener("click", function () {
   this.style.backgroundColor = randColor();
@@ -241,4 +272,6 @@ closeLogin.addEventListener("click", function () {
 
 search.addEventListener("click", function () {
   showSpl(monthInpt, dayInpt, us.id, splCon);
+  showSubmit(monthInpt, dayInpt, us.id);
+  showHours(monthInpt, dayInpt, us.id);
 });
