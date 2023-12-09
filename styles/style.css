@@ -268,3 +268,28 @@ footer {
 .spl-label {
   color: var(--light-color);
 }
+
+/* Room */
+.room__details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background: rgb(185, 48, 201);
+  background: linear-gradient(
+    148deg,
+    rgba(185, 48, 201, 1) 40%,
+    rgba(119, 5, 134, 1) 100%
+  );
+  padding: 20px;
+  color: white;
+  margin-left: 50px;
+}
+.room-sec {
+  background-color: rgb(255 255 255 / 0.2);
+  padding: 20px;
+  border-radius: 5px;
+}
+.room__numbers {
+  font-size: 40px;
+  text-align: center;
+}
