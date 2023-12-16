@@ -142,7 +142,7 @@
       this[globalName] = mainExports;
     }
   }
-})({"bysI2":[function(require,module,exports) {
+})({"bWQjm":[function(require,module,exports) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
@@ -578,30 +578,43 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _moduleJs = require("./module.js");
 var _runtime = require("regenerator-runtime/runtime");
-var _navViewJs = require("./views/NavView.js");
-var _navViewJsDefault = parcelHelpers.interopDefault(_navViewJs);
-var _loginViewJs = require("./views/LoginView.js");
-var _loginViewJsDefault = parcelHelpers.interopDefault(_loginViewJs);
-const controlLogin = function() {
+var _formViewJs = require("./views/FormView.js");
+var _formViewJsDefault = parcelHelpers.interopDefault(_formViewJs);
+const controlForm = function() {
     // 1) render Login
-    (0, _loginViewJsDefault.default).render(_moduleJs.getData());
-// check if user and pin are right
-// if (module.state.users.includes(LoginView.userName)) {
-//   console.log("user exists");
-// }
+    (0, _formViewJsDefault.default).render(_moduleJs.getData());
+    // check if user and pin are right
+    if (_moduleJs.state.users.includes((0, _formViewJsDefault.default).userName)) console.log("user exists");
 };
-const controlLoginPass = function() {
-    console.log("success");
+const controlLoginPass = ()=>{
+    const user = document.querySelector(".log__user").value.trim();
+    const pass = document.querySelector(".log__pass").value;
+    console.log(_moduleJs.state.pins);
+    console.log(_moduleJs.state.users);
+    if (!user) return;
+    if (_moduleJs.state.users.includes(user)) {
+        console.log("user is right");
+        if (!pass) console.log("enter a valid pin");
+        else {
+            if (pass === _moduleJs.state.pins[user]) ;
+            else console.log("wrong pass");
+        }
+    } else console.log("no user found");
+};
+const controlFormClose = function() {
+    console.log("form closed");
 };
 const init = function() {
-    (0, _navViewJsDefault.default).addHandlerLogin(controlLogin);
-    (0, _loginViewJsDefault.default).addHandlerLogin(controlLoginPass);
+    // NavView.addHandlerLogin(controlLogin);
+    (0, _formViewJsDefault.default).addHandlerCloseForm(controlFormClose);
+    (0, _formViewJsDefault.default).addHandlerRender(controlForm);
+    (0, _formViewJsDefault.default).addHandlerLogin(controlLoginPass);
 };
 // module.getData();
 init();
 _moduleJs.getData();
 
-},{"./module.js":"562dW","regenerator-runtime/runtime":"dXNgZ","./views/NavView.js":"9JFs1","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./views/LoginView.js":"yLcFx"}],"562dW":[function(require,module,exports) {
+},{"./module.js":"562dW","regenerator-runtime/runtime":"dXNgZ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./views/FormView.js":"3DrWp"}],"562dW":[function(require,module,exports) {
 // export { getJson } from "./helpers.js";
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
@@ -624,6 +637,7 @@ const months = [
 ];
 const state = {
     users: [],
+    pins: {},
     names: [],
     queues: {},
     curUser: {
@@ -644,6 +658,10 @@ const getData = async function() {
             state.names.push(name);
             state.users.push(user);
         });
+        // make pins
+        state.users.map((u)=>{
+            state.pins[u] = u.slice(2, 6);
+        });
         // get queue index and list
         data.values[0].forEach((value, i)=>{
             if (i < 7 || value === "") return;
@@ -652,7 +670,7 @@ const getData = async function() {
                 qa: i + 1
             };
         });
-        console.log(state.queues);
+        console.log(state);
         return data;
     } catch (err) {
         console.error(err);
@@ -1276,73 +1294,74 @@ try {
     else Function("r", "regeneratorRuntime = r")(runtime);
 }
 
-},{}],"9JFs1":[function(require,module,exports) {
+},{}],"3DrWp":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-class NavView {
-    _parentEL = document.querySelector(".container");
-    addHandlerLogin(handler) {
-        this._parentEL.addEventListener("click", function(e) {
-            const btn = e.target.closest(".login-btn");
-            if (!btn) return;
-            handler();
-        });
-    }
-}
-exports.default = new NavView();
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"yLcFx":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-class LoginView {
-    _parentEl = document.body;
+class FormView {
+    _parentEl = document.querySelector(".login");
+    _container = document.querySelector(".overlay");
     _data;
     formy;
     render(data) {
         this._data = data;
         const markup = this._generateMarkup();
-        if (this._parentEl !== document.body) this._clear;
+        this._clear();
         this._parentEl.insertAdjacentHTML("afterbegin", markup);
-        formy = this._parentEl.querySelector(".login");
+        this._container.classList = "overlay z-pop opacity-100";
     }
     _clear() {
         this._parentEl.innerHTML = "";
     }
     _generateMarkup() {
         return `
-            <div class="overlay z-pop opacity-100">
-                <div class="form-con">
-                    <form class="login">
-                    <h3>Login</h3>
-                    <div>
-                        <input class="log__user" type="text" placeholder="username" />
-                        <p class="wrng__id opacity-0">ID not found.</p>
-                    </div>
-                    <div>
-                        <input class="log__pass" type="password" placeholder="pin" />
-                        <p class="wrng__pass opacity-0">your pin is incorrect.</p>
-                    </div>
-                    <button class="log">
-                        <i class="fa-solid fa-arrow-right-to-bracket"></i>
-                    </button>
-                    </form>
-                    <div class="close__login">\u{274C}</div>
-                </div>
-            </div>
-        `;
+          <h3>Login</h3>
+          <div>
+            <input class="log__user" type="text" placeholder="username" />
+            <p class="wrng__id opacity-0">ID not found.</p>
+          </div>
+          <div>
+            <input class="log__pass" type="password" placeholder="pin" />
+            <p class="wrng__pass opacity-0">your pin is incorrect.</p>
+          </div>
+          <button type="submit" class="log">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i>
+          </button>
+          <div class="close__login">\u{274C}</div>
+    `;
     }
-    addHandlerLogin(handler) {
-        this._parentEl.querySelector(".login").addEventListener("submit", (e)=>{
-            e.preventDefault();
-            const userName = document.body.querySelector(".log__user").value.trim();
-            const userPin = document.body.querySelector(".log__pass").value;
-            console.log(userName, userPin);
+    addHandlerRender(handler) {
+        const nav = document.querySelector("nav");
+        nav.addEventListener("click", function(e) {
+            const btn = e.target.closest(".login-btn");
+            if (!btn) return;
             handler();
         });
     }
+    addHandlerLogin(handler) {
+        document.addEventListener("DOMContentLoaded", ()=>{
+            this._parentEl.addEventListener("submit", (e)=>{
+                e.preventDefault();
+                handler();
+            });
+        });
+    }
+    addHandlerCloseForm(handler) {
+        this._container.addEventListener("click", (e)=>{
+            const closeBtn = e.target.closest(".close__login");
+            const divCon = e.target.closest(".div-con");
+            if (closeBtn) {
+                this._clear();
+                this._container.classList = "overlay z-drop opacity-0";
+            }
+        // if (this._parentEl) {
+        //   this._clear();
+        //   this._parentEl.classList = "overlay z-drop opacity-0";
+        // }
+        });
+    }
 }
-exports.default = new LoginView();
+exports.default = new FormView();
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["bysI2","CE27q"], "CE27q", "parcelRequirea6eb")
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["bWQjm","CE27q"], "CE27q", "parcelRequirea6eb")
 
 //# sourceMappingURL=index.0ddfc6e7.js.map

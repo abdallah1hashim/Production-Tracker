@@ -135,8 +135,8 @@ form input {
   padding: 10px;
   font-size: 20px;
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: -35px;
+  right: -30px;
 }
 
 main {

@@ -146,12 +146,12 @@ form input {
 }
 
 .close__login {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  padding: 10px;
   cursor: pointer;
+  padding: 10px;
   font-size: 20px;
+  position: absolute;
+  top: -35px;
+  right: -30px;
 }
 
 /* main */

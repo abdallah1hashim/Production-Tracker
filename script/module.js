@@ -16,6 +16,7 @@ export const months = [
 ];
 export const state = {
   users: [],
+  pins: {},
   names: [],
   queues: {},
   curUser: {
@@ -43,6 +44,11 @@ export const getData = async function () {
       state.users.push(user);
     });
 
+    // make pins
+    state.users.map((u) => {
+      state.pins[u] = u.slice(2, 6);
+    });
+
     // get queue index and list
     data.values[0].forEach((value, i) => {
       if (i < 7 || value === "") return;
@@ -53,7 +59,7 @@ export const getData = async function () {
       };
     });
 
-    console.log(state.queues);
+    console.log(state);
     return data;
   } catch (err) {
     console.error(err);
