@@ -1,16 +1,14 @@
 export default class View {
-    _data;
+  _data;
 
-  
-    render(data) {
-      this._data = data;
-      const markup = this._generateMarkup();
-      this._clear();
-      this._parentEl.insertAdjacentHTML("afterbegin", markup);
-      this._container.classList = "overlay z-pop opacity-100";
-    }
-  
-    _clear() {
-      this._parentEl.innerHTML = "";
-    }
+  render(data) {
+    this._data = data;
+    this._clear();
+    const markup = this._generateMarkup();
+    this._parentEl.insertAdjacentHTML("afterbegin", markup);
+  }
+
+  _clear() {
+    this._parentEl.innerHTML = "";
+  }
 }

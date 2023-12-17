@@ -142,7 +142,7 @@
       this[globalName] = mainExports;
     }
   }
-})({"bWQjm":[function(require,module,exports) {
+})({"bysI2":[function(require,module,exports) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
@@ -580,47 +580,96 @@ var _moduleJs = require("./module.js");
 var _runtime = require("regenerator-runtime/runtime");
 var _formViewJs = require("./views/FormView.js");
 var _formViewJsDefault = parcelHelpers.interopDefault(_formViewJs);
-const controlForm = function() {
+var _appViewJs = require("./views/appView.js");
+var _appViewJsDefault = parcelHelpers.interopDefault(_appViewJs);
+var _widgetViewJs = require("./views/WidgetView.js");
+var _widgetViewJsDefault = parcelHelpers.interopDefault(_widgetViewJs);
+var _mainViewJs = require("./views/MainView.js");
+var _mainViewJsDefault = parcelHelpers.interopDefault(_mainViewJs);
+var _navViewJs = require("./views/NavView.js");
+var _navViewJsDefault = parcelHelpers.interopDefault(_navViewJs);
+var _dateViewJs = require("./views/DateView.js");
+var _dateViewJsDefault = parcelHelpers.interopDefault(_dateViewJs);
+var _footerViewJs = require("./views/footerView.js");
+var _footerViewJsDefault = parcelHelpers.interopDefault(_footerViewJs);
+const controlForm = async function() {
     // 1) render Login
-    (0, _formViewJsDefault.default).render(_moduleJs.getData());
+    (0, _formViewJsDefault.default).render();
     // check if user and pin are right
     if (_moduleJs.state.users.includes((0, _formViewJsDefault.default).userName)) console.log("user exists");
 };
-const controlLoginPass = ()=>{
+const controlLoginPass = async function() {
     const user = document.querySelector(".log__user").value.trim();
     const pass = document.querySelector(".log__pass").value;
-    console.log(_moduleJs.state.pins);
-    console.log(_moduleJs.state.users);
     if (!user) return;
     if (_moduleJs.state.users.includes(user)) {
         console.log("user is right");
         if (!pass) console.log("enter a valid pin");
-        else {
-            if (pass === _moduleJs.state.pins[user]) ;
-            else console.log("wrong pass");
-        }
-    } else console.log("no user found");
+        else if (pass === _moduleJs.state.pins[user]) {
+            await _moduleJs.getData();
+            await _moduleJs.getTeamData();
+            _moduleJs.state.curUser = user;
+            _moduleJs.setUserData();
+            (0, _mainViewJsDefault.default).hideMain();
+            (0, _appViewJsDefault.default).render(_moduleJs.state.curUserDetails);
+            (0, _appViewJsDefault.default).makeDark();
+            (0, _navViewJsDefault.default).changeClass();
+            (0, _navViewJsDefault.default).render(_moduleJs.state.curUserDetails);
+            (0, _appViewJsDefault.default).removeHide();
+            // DateView.render();
+            (0, _widgetViewJsDefault.default).addHolder();
+            (0, _footerViewJsDefault.default).makeDisapear();
+            (0, _formViewJsDefault.default).makeDisapear();
+        } else (0, _formViewJsDefault.default).renderError();
+    } else (0, _formViewJsDefault.default).renderError();
 };
 const controlFormClose = function() {
     console.log("form closed");
+};
+const controlSpl = async function() {
+    const { month, day } = (0, _dateViewJsDefault.default).getDate();
+    await _moduleJs.getSplByDay(day, month);
+    await _moduleJs.getTeamSplByDay(day, month);
+    (0, _widgetViewJsDefault.default).render(_moduleJs.state);
+};
+// const controlSPLQ = function (o) {
+//   console.log("yes");
+//   console.log(module.state);
+//   // LabelerSPLView.render(module.state);
+// };
+const controlLogout = function() {
+    (0, _appViewJsDefault.default)._clear();
+    (0, _dateViewJsDefault.default)._clear();
+    (0, _widgetViewJsDefault.default)._clear();
+    window.location.reload();
 };
 const init = function() {
     // NavView.addHandlerLogin(controlLogin);
     (0, _formViewJsDefault.default).addHandlerCloseForm(controlFormClose);
     (0, _formViewJsDefault.default).addHandlerRender(controlForm);
     (0, _formViewJsDefault.default).addHandlerLogin(controlLoginPass);
+    (0, _dateViewJsDefault.default).addHandlerdate(controlSpl);
+    (0, _navViewJsDefault.default).addHandlerLogout(controlLogout);
+// WidgetView.addHandlerPickLQ(controlSPLQ);
 };
 // module.getData();
 init();
 _moduleJs.getData();
 
-},{"./module.js":"562dW","regenerator-runtime/runtime":"dXNgZ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./views/FormView.js":"3DrWp"}],"562dW":[function(require,module,exports) {
-// export { getJson } from "./helpers.js";
+},{"./module.js":"562dW","regenerator-runtime/runtime":"dXNgZ","./views/FormView.js":"3DrWp","./views/appView.js":"dWixd","./views/WidgetView.js":"fWZ9C","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./views/MainView.js":"3EEaO","./views/NavView.js":"9JFs1","./views/footerView.js":"1Wrlt","./views/DateView.js":"lN6Bd"}],"562dW":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getJson", ()=>(0, _helpersJs.getJson));
 parcelHelpers.export(exports, "months", ()=>months);
 parcelHelpers.export(exports, "state", ()=>state);
 parcelHelpers.export(exports, "getData", ()=>getData);
+parcelHelpers.export(exports, "getSplByDay", ()=>getSplByDay);
+parcelHelpers.export(exports, "getTeamData", ()=>getTeamData);
+parcelHelpers.export(exports, "getTeamSplByDay", ()=>getTeamSplByDay);
+parcelHelpers.export(exports, "setUserData", ()=>setUserData);
+var _helpersJs = require("./helpers.js");
+var _widgetViewJs = require("./views/WidgetView.js");
+var _widgetViewJsDefault = parcelHelpers.interopDefault(_widgetViewJs);
 const months = [
     "January",
     "February",
@@ -636,20 +685,34 @@ const months = [
     "December"
 ];
 const state = {
+    wantedLQ: "",
+    wantedTQ: "",
+    data: [],
     users: [],
+    teams: "",
+    teamsIndex: {},
+    usersIndex: {},
     pins: {},
     names: [],
     queues: {},
-    curUser: {
+    curUser: "",
+    teamsData: "",
+    curUserDetails: {
         name: "",
-        users: ""
-    }
+        shift: "",
+        location: "",
+        device: "",
+        email: "",
+        team: "",
+        hours: ""
+    },
+    day: "",
+    month: ""
 };
 const getData = async function() {
     try {
-        const res = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/1nt2hFgLSvFXHpHEgOe989W88u0xJlTfHgI8fd7_eaj8/values/'SPL%20Labeler26%2F11'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`);
-        if (!res.ok) throw new Error("faild to fetch data");
-        const data = await res.json();
+        data = await (0, _helpersJs.getJson)(`https://sheets.googleapis.com/v4/spreadsheets/18xHdeVeDhXQ-ksHQjCOVskG3XmIAE4mqat2Foq-jTdw/values/'SPL%20Labeler%2015%2F12'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`);
+        state.data = data.values;
         // get all users
         data.values.forEach((value, i)=>{
             if (i === 1 || i === 2) return;
@@ -657,25 +720,90 @@ const getData = async function() {
             const user = value[1].slice(0, 8);
             state.names.push(name);
             state.users.push(user);
+            state.usersIndex[user] = i;
         });
         // make pins
         state.users.map((u)=>{
             state.pins[u] = u.slice(2, 6);
         });
         // get queue index and list
-        data.values[0].forEach((value, i)=>{
+        data.values[1].forEach((value, i)=>{
             if (i < 7 || value === "") return;
-            state.queues[value] = {
-                fp: i,
-                qa: i + 1
-            };
+            state.queues[i] = value;
         });
+        console.log(data.values);
         console.log(state);
         return data;
     } catch (err) {
         console.error(err);
     }
-}; //      `https://sheets.googleapis.com/v4/spreadsheets/1nt2hFgLSvFXHpHEgOe989W88u0xJlTfHgI8fd7_eaj8/values/'SPL%20Labeler26%2F11'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`
+};
+const getSplByDay = async function(d, m) {
+    try {
+        state.day = d;
+        state.month = m;
+        const data1 = await (0, _helpersJs.getJson)(`https://sheets.googleapis.com/v4/spreadsheets/18xHdeVeDhXQ-ksHQjCOVskG3XmIAE4mqat2Foq-jTdw/values/'SPL%20Labeler%20${d}%2F${m}'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`);
+        state.curUserDetails.spl = data1.values[state.usersIndex[state.curUser]];
+        console.log(state);
+    } catch (err) {
+        console.error(err);
+        (0, _widgetViewJsDefault.default).renderError();
+    }
+};
+const getTeamData = async function() {
+    try {
+        const data1 = await (0, _helpersJs.getJson)(`https://sheets.googleapis.com/v4/spreadsheets/18xHdeVeDhXQ-ksHQjCOVskG3XmIAE4mqat2Foq-jTdw/values/'SPL%20Team%2015%2F12'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`);
+        teams = data1.values;
+        state.teams = data1.values.map((t)=>t[1]);
+        state.teams.forEach((t, i)=>{
+            state.teamsIndex[t] = {
+                fp: i,
+                qa: i + 1
+            };
+        });
+        console.log(teams);
+        console.log(state);
+    } catch (err) {
+        console.error(err);
+    }
+};
+const getTeamSplByDay = async function(d, m) {
+    try {
+        state.day = d;
+        state.month = m;
+        const data1 = await (0, _helpersJs.getJson)(`https://sheets.googleapis.com/v4/spreadsheets/18xHdeVeDhXQ-ksHQjCOVskG3XmIAE4mqat2Foq-jTdw/values/'SPL%20Team%20${d}%2F${m}'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`);
+        state.teamsData = data1.values;
+        const index = state.teams.indexOf(state.curUserDetails.team);
+        console.log(state.teamsData[index]);
+        state.curUserDetails.teamspl = state.teamsData[index];
+    } catch (err) {
+        console.error(err);
+    }
+};
+const setUserData = function() {
+    state.curUserDetails.name = state.data[state.usersIndex[state.curUser]][3];
+    state.curUserDetails.device = state.data[state.usersIndex[state.curUser]][5];
+    state.curUserDetails.location = state.data[state.usersIndex[state.curUser]][6];
+    state.curUserDetails.shift = state.data[state.usersIndex[state.curUser]][4];
+    state.curUserDetails.team = state.data[state.usersIndex[state.curUser]][2];
+    state.curUserDetails.email = state.data[state.usersIndex[state.curUser]][1];
+    console.log(state.curUser);
+}; //      `https://sheets.googleapis.com/v4/spreadsheets/18xHdeVeDhXQ-ksHQjCOVskG3XmIAE4mqat2Foq-jTdw/values/'SPL%20Labeler%2026%2F11'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`
+
+},{"./helpers.js":"lsDLd","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./views/WidgetView.js":"fWZ9C"}],"lsDLd":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getJson", ()=>getJson);
+const getJson = async function(url) {
+    try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error("faild to fetch data");
+        const data = await res.json();
+        return data;
+    } catch (err) {
+        throw err;
+    }
+};
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -707,7 +835,138 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"dXNgZ":[function(require,module,exports) {
+},{}],"fWZ9C":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _view = require("./View");
+var _viewDefault = parcelHelpers.interopDefault(_view);
+class widget extends (0, _viewDefault.default) {
+    _parentEl = document.querySelector(".widget-con");
+    renderError() {
+        this._clear();
+        const message = `<p style="color:red">Faild to fetch your data :< Make sure you entered the right date!"</p>`;
+        this._parentEl.insertAdjacentHTML("afterbegin", message);
+    }
+    _generateMarkup() {
+        return `
+          <div class="wid">
+            <h2 class="wid-heading">Labeler</h2>
+            <div class="content">
+              <ul class="tabs">
+                <li><a class="active" title="SPL" href="#tab1"><i class="fa-solid fa-gauge"></i>SPL</a></li>
+                <li><a title="Time" href="#tab2"><i class="fa-solid fa-clock"></i>Hours</i></a></li>
+              </ul>
+              <div class="tab-content-wrapper">
+
+                <article class="tab-content" id="tab1-content">
+
+                    ${this.generateOptions(this._data.curUserDetails)}
+                  
+
+                </article>
+
+                <article class="tab-content" id="tab2-content">
+                  <p>Your Hours</p>
+                  <h3>0.00</h3>
+                </article>
+              </div>
+            </div>  
+          </div>
+          <div class="wid">
+            <h2 class="wid-heading">Team</h2>
+            <div class="content">
+              <ul class="tabs">
+                <li><a class="active" title="SPL" href="#tab1"><i class="fa-solid fa-gauge"></i>SPL</a></li>
+                <li><a title="Time" href="#tab2"><i class="fa-solid fa-clock"></i>Hours</i></a></li>
+              </ul>
+              <div class="tab-content-wrapper">
+
+                <article class="tab-content" id="tab1-content">
+                ${this.generateOptionsForTeam(this._data.curUserDetails)}
+                </article>
+
+                <article class="tab-content" id="tab2-content">
+                  <p>Your Hours</p>
+                  <h3>0.00</h3>
+                </article>
+              </div>
+            </div>  
+          </div>
+    `;
+    }
+    // ${this.generateOptionsForTeam(this._data.queues)};
+    generateOptions(queues) {
+        return queues.spl.map((li, i)=>{
+            if (i < 7) return;
+            if (!li) return;
+            return `
+        <div class="lap-spl-text">
+          <p>${this._data.queues[i]}</p>
+          <h3>${(+li).toFixed(3) || "NONE"}</h3>
+        </div>
+        `;
+        }).join("");
+    }
+    generateOptionsForTeam(queues) {
+        return queues.teamspl.map((li, i)=>{
+            if (i < 3) return;
+            if (!li) return;
+            return `
+        <div class="lap-spl-text">
+          <p>${this._data.queues[i + 4]}</p>
+          <h3>${(+li).toFixed(3) || "NONE"}</h3>
+        </div>
+        `;
+        }).join("");
+    }
+    addHolder() {
+        const child = `<div class="holder"></div>`;
+        this._parentEl.insertAdjacentHTML("afterbegin", child);
+    }
+}
+// getQueue() {
+//   let lablersQ = document.querySelector(".Labeler-spl-options").value;
+//   let teamQ = document.querySelector(".team-spl-options").value;
+//   return { lablersQ, teamQ };
+// }
+// addHandlerPickLQ(handler) {
+//   // this._parentEl.addEventListener("click", (e) => {
+//   //   const optionQ = e.target.closest(".labelerBtn");
+//   //   if (!optionQ) return;
+//   const labelerDropdown = this._parentEl.querySelector(
+//     ".Labeler-spl-options"
+//   );
+//   if (labelerDropdown) {
+//     labelerDropdown.addEventListener("change", () => {
+//       const labelersQ = labelerDropdown.value;
+//       console.log(labelersQ);
+//       handler();
+//     });
+//   } else {
+//     console.error("Labeler dropdown element not found.");
+//   }
+//   // }
+// }
+exports.default = new widget();
+
+},{"./View":"gQab5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gQab5":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+class View {
+    _data;
+    render(data) {
+        this._data = data;
+        this._clear();
+        const markup = this._generateMarkup();
+        this._parentEl.insertAdjacentHTML("afterbegin", markup);
+    }
+    _clear() {
+        this._parentEl.innerHTML = "";
+    }
+}
+exports.default = View;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dXNgZ":[function(require,module,exports) {
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
  *
@@ -1317,16 +1576,15 @@ class FormView {
           <h3>Login</h3>
           <div>
             <input class="log__user" type="text" placeholder="username" />
-            <p class="wrng__id opacity-0">ID not found.</p>
           </div>
           <div>
             <input class="log__pass" type="password" placeholder="pin" />
-            <p class="wrng__pass opacity-0">your pin is incorrect.</p>
           </div>
           <button type="submit" class="log">
             <i class="fa-solid fa-arrow-right-to-bracket"></i>
           </button>
           <div class="close__login">\u{274C}</div>
+          <div class="login__error"></div>
     `;
     }
     addHandlerRender(handler) {
@@ -1336,6 +1594,19 @@ class FormView {
             if (!btn) return;
             handler();
         });
+    }
+    makeDisapear() {
+        this._clear();
+        this._container.classList = "overlay z-drop opacity-0";
+    }
+    renderError() {
+        // const parent = document.querySelector("login__error")
+        const parent = document.querySelector(".login__error");
+        const markup = `
+    <p>Icorrect username or password</p>
+    `;
+        parent.innerHTML = "";
+        parent.insertAdjacentHTML("beforeend", markup);
     }
     addHandlerLogin(handler) {
         document.addEventListener("DOMContentLoaded", ()=>{
@@ -1362,6 +1633,159 @@ class FormView {
 }
 exports.default = new FormView();
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["bWQjm","CE27q"], "CE27q", "parcelRequirea6eb")
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dWixd":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _view = require("./View");
+var _viewDefault = parcelHelpers.interopDefault(_view);
+class appView extends (0, _viewDefault.default) {
+    _parentEl = document.querySelector(".app .container .info");
+    _generateMarkup() {
+        return `
+    <div class="h2-con w-100">
+            <h2>User Details</h2>
+          </div>
+          <div class="details">
+            <div class="user-icon">
+              <i class="fa-solid fa-user"></i>
+            </div>
+            <div class="personal-info">
+              <h3>${this._data.name}</h3>
+              <div class="personal-info-text">
+                <p>EMAIL: ${this._data.email}</p>
+                <p>SHIFT: ${this._data.shift === "ON" ? "Over Night" : ""}</p>
+                <p>LOCATION: ${this._data.location}</p>
+                <p>TEAM: ${this._data.team}</p>
+                <p>DEVICE: ${this._data.device}</p>
+              </div>
+            </div>
+          </div>
+    `;
+    }
+    makeDark() {
+        document.body.style.backgroundColor = "var(--widget-background)";
+    }
+    removeHide() {
+        const app = document.querySelector(".app");
+        app.classList.remove("hide");
+    }
+    addHide() {
+        const app = document.querySelector(".app");
+        app.classList.add("hide");
+    }
+}
+exports.default = new appView();
+
+},{"./View":"gQab5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3EEaO":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _view = require("./View");
+var _viewDefault = parcelHelpers.interopDefault(_view);
+class MainView extends (0, _viewDefault.default) {
+    _parentEl = document.querySelector("main");
+    _generateMarkup() {
+        return `
+    <main class="d-flex align-items-center p-0">
+      <div class="container">
+        <div class="welcome">
+          <h1>OverNight Poduction Tracker</h1>
+          <div class="img__holder">
+            <img src="/assets/pics/8-bTniNGuczY85cuG-removebg.webp" />
+          </div>
+        </div>
+      </div>
+    </main>
+    `;
+    }
+    hideMain() {
+        this._parentEl.classList.add("d-none");
+    }
+    showMain() {
+        this._parentEl.classList.remove("d-none");
+    }
+}
+exports.default = new MainView();
+
+},{"./View":"gQab5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9JFs1":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _view = require("./View");
+var _viewDefault = parcelHelpers.interopDefault(_view);
+class NavView extends (0, _viewDefault.default) {
+    _parentEl = document.querySelector("nav");
+    _generateMarkup() {
+        return `
+    <div class="container">
+      <p class="greating">Welcome, ${this._data.name.split(" ")[0]}</p>
+          <div class="logo">
+            
+          </div>
+      <button class="logout-btn">Logout</button>
+    </div>
+    `;
+    }
+    changeClass() {
+        this._parentEl.classList = "nav-app";
+    }
+    renderOriginal() {
+        this._clear();
+        const markup = `
+    <div class="container">
+    <p class="greating">Log in to get started</p>
+    <div class="logo">
+      <img src="/assets/pics/logo-no-background.webp" alt="logo" />
+    </div>
+    <button class="login-btn">Login</button>
+    <!-- <button class="logout-btn hidden">Logout</button> -->
+  </div>
+    `;
+        this._parentEl.insertAdjacentHTML("afterbegin", markup);
+    }
+    addHandlerLogout(handler) {
+        this._parentEl.addEventListener("click", (e)=>{
+            const logout = e.target.closest(".logout-btn");
+            if (!logout) return;
+            handler();
+        });
+    }
+}
+exports.default = new NavView();
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./View":"gQab5"}],"1Wrlt":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+class FooterView {
+    _parenEl = document.querySelector(".footer");
+    makeDisapear() {
+        this._parenEl.innerHTML = "";
+    }
+}
+exports.default = new FooterView();
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lN6Bd":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _view = require("./View");
+var _viewDefault = parcelHelpers.interopDefault(_view);
+class DateView extends (0, _viewDefault.default) {
+    _parentEl = document.querySelector(".date");
+    getDate() {
+        const month = +this._parentEl.querySelector("#month").value;
+        const day = +this._parentEl.querySelector("#day").value;
+        return {
+            month,
+            day
+        };
+    }
+    addHandlerdate(handler) {
+        const btn = document.querySelector(".search");
+        btn.addEventListener("click", ()=>{
+            handler();
+        });
+    }
+}
+exports.default = new DateView();
+
+},{"./View":"gQab5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["bysI2","CE27q"], "CE27q", "parcelRequirea6eb")
 
 //# sourceMappingURL=index.0ddfc6e7.js.map

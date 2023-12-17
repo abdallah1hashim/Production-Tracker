@@ -1,4 +1,7 @@
-// export { getJson } from "./helpers.js";
+import { getJson } from "./helpers.js";
+import WidgetView from "./views/WidgetView.js";
+
+export { getJson } from "./helpers.js";
 
 export const months = [
   "January",
@@ -15,25 +18,38 @@ export const months = [
   "December",
 ];
 export const state = {
+  wantedLQ: "",
+  wantedTQ: "",
+  data: [],
   users: [],
+  teams: "",
+  teamsIndex: {},
+  usersIndex: {},
   pins: {},
   names: [],
   queues: {},
-  curUser: {
+  curUser: "",
+  teamsData: "",
+  curUserDetails: {
     name: "",
-    users: "",
+    shift: "",
+    location: "",
+    device: "",
+    email: "",
+    team: "",
+    hours: "",
   },
+  day: "",
+  month: "",
 };
 
 export const getData = async function () {
   try {
-    const res = await fetch(
-      `https://sheets.googleapis.com/v4/spreadsheets/1nt2hFgLSvFXHpHEgOe989W88u0xJlTfHgI8fd7_eaj8/values/'SPL%20Labeler26%2F11'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`
+    data = await getJson(
+      `https://sheets.googleapis.com/v4/spreadsheets/18xHdeVeDhXQ-ksHQjCOVskG3XmIAE4mqat2Foq-jTdw/values/'SPL%20Labeler%2015%2F12'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`
     );
 
-    if (!res.ok) throw new Error("faild to fetch data");
-
-    const data = await res.json();
+    state.data = data.values;
 
     // get all users
     data.values.forEach((value, i) => {
@@ -42,6 +58,7 @@ export const getData = async function () {
       const user = value[1].slice(0, 8);
       state.names.push(name);
       state.users.push(user);
+      state.usersIndex[user] = i;
     });
 
     // make pins
@@ -50,19 +67,84 @@ export const getData = async function () {
     });
 
     // get queue index and list
-    data.values[0].forEach((value, i) => {
+    data.values[1].forEach((value, i) => {
       if (i < 7 || value === "") return;
 
-      state.queues[value] = {
-        fp: i,
-        qa: i + 1,
-      };
+      state.queues[i] = value;
     });
 
+    console.log(data.values);
     console.log(state);
     return data;
   } catch (err) {
     console.error(err);
   }
 };
-//      `https://sheets.googleapis.com/v4/spreadsheets/1nt2hFgLSvFXHpHEgOe989W88u0xJlTfHgI8fd7_eaj8/values/'SPL%20Labeler26%2F11'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`
+
+export const getSplByDay = async function (d, m) {
+  try {
+    state.day = d;
+    state.month = m;
+
+    const data = await getJson(
+      `https://sheets.googleapis.com/v4/spreadsheets/18xHdeVeDhXQ-ksHQjCOVskG3XmIAE4mqat2Foq-jTdw/values/'SPL%20Labeler%20${d}%2F${m}'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`
+    );
+
+    state.curUserDetails.spl = data.values[state.usersIndex[state.curUser]];
+    console.log(state);
+  } catch (err) {
+    console.error(err);
+    WidgetView.renderError();
+  }
+};
+
+export const getTeamData = async function () {
+  try {
+    const data = await getJson(
+      `https://sheets.googleapis.com/v4/spreadsheets/18xHdeVeDhXQ-ksHQjCOVskG3XmIAE4mqat2Foq-jTdw/values/'SPL%20Team%2015%2F12'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`
+    );
+    teams = data.values;
+
+    state.teams = data.values.map((t) => t[1]);
+    state.teams.forEach((t, i) => {
+      state.teamsIndex[t] = {
+        fp: i,
+        qa: i + 1,
+      };
+    });
+    console.log(teams);
+    console.log(state);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const getTeamSplByDay = async function (d, m) {
+  try {
+    state.day = d;
+    state.month = m;
+
+    const data = await getJson(
+      `https://sheets.googleapis.com/v4/spreadsheets/18xHdeVeDhXQ-ksHQjCOVskG3XmIAE4mqat2Foq-jTdw/values/'SPL%20Team%20${d}%2F${m}'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`
+    );
+    state.teamsData = data.values;
+    const index = state.teams.indexOf(state.curUserDetails.team);
+    console.log(state.teamsData[index]);
+
+    state.curUserDetails.teamspl = state.teamsData[index];
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const setUserData = function () {
+  state.curUserDetails.name = state.data[state.usersIndex[state.curUser]][3];
+  state.curUserDetails.device = state.data[state.usersIndex[state.curUser]][5];
+  state.curUserDetails.location =
+    state.data[state.usersIndex[state.curUser]][6];
+  state.curUserDetails.shift = state.data[state.usersIndex[state.curUser]][4];
+  state.curUserDetails.team = state.data[state.usersIndex[state.curUser]][2];
+  state.curUserDetails.email = state.data[state.usersIndex[state.curUser]][1];
+  console.log(state.curUser);
+};
+//      `https://sheets.googleapis.com/v4/spreadsheets/18xHdeVeDhXQ-ksHQjCOVskG3XmIAE4mqat2Foq-jTdw/values/'SPL%20Labeler%2026%2F11'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`

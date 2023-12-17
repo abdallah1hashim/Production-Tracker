@@ -21,16 +21,15 @@ class FormView {
           <h3>Login</h3>
           <div>
             <input class="log__user" type="text" placeholder="username" />
-            <p class="wrng__id opacity-0">ID not found.</p>
           </div>
           <div>
             <input class="log__pass" type="password" placeholder="pin" />
-            <p class="wrng__pass opacity-0">your pin is incorrect.</p>
           </div>
           <button type="submit" class="log">
             <i class="fa-solid fa-arrow-right-to-bracket"></i>
           </button>
           <div class="close__login">❌</div>
+          <div class="login__error"></div>
     `;
   }
   addHandlerRender(handler) {
@@ -42,11 +41,28 @@ class FormView {
       handler();
     });
   }
+
+  makeDisapear() {
+    this._clear();
+    this._container.classList = "overlay z-drop opacity-0";
+  }
+
+  renderError() {
+    // const parent = document.querySelector("login__error")
+    const parent = document.querySelector(".login__error");
+    const markup = `
+    <p>Icorrect username or password</p>
+    `;
+
+    parent.innerHTML = "";
+    parent.insertAdjacentHTML("beforeend", markup);
+  }
+
   addHandlerLogin(handler) {
     document.addEventListener("DOMContentLoaded", () => {
       this._parentEl.addEventListener("submit", (e) => {
         e.preventDefault();
-        
+
         handler();
       });
     });
