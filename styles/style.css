@@ -462,3 +462,22 @@ main .welcome {
 footer {
   text-align: center;
 }
+
+.spinner{
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.spinner i{
+  animation: rotateSpinner 1s linear infinite;
+}
+
+@keyframes rotateSpinner {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

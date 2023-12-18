@@ -63,6 +63,7 @@ const controlSpl = async function () {
   await module.getSplByDay(day, month);
   await module.getTeamSplByDay(day, month);
 
+  WidgetView._renderSpinner();
   WidgetView.render(module.state);
 };
 

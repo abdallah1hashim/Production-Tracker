@@ -630,6 +630,7 @@ const controlSpl = async function() {
     const { month, day } = (0, _dateViewJsDefault.default).getDate();
     await _moduleJs.getSplByDay(day, month);
     await _moduleJs.getTeamSplByDay(day, month);
+    (0, _widgetViewJsDefault.default)._renderSpinner();
     (0, _widgetViewJsDefault.default).render(_moduleJs.state);
 };
 // const controlSPLQ = function (o) {
@@ -962,6 +963,15 @@ class View {
     }
     _clear() {
         this._parentEl.innerHTML = "";
+    }
+    _renderSpinner() {
+        this._clear();
+        const mark = `
+      <div class="spinner">
+        <i class="fa-solid fa-spinner"></i>
+      </div>
+    `;
+        this._parentEl.insertAdjacentHTML("afterbegin", mark);
     }
 }
 exports.default = View;

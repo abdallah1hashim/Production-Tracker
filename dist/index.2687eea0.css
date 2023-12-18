@@ -450,4 +450,25 @@ footer {
   text-align: center;
 }
 
+.spinner {
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  display: flex;
+}
+
+.spinner i {
+  animation: 1s linear infinite rotateSpinner;
+}
+
+@keyframes rotateSpinner {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 /*# sourceMappingURL=index.2687eea0.css.map */
