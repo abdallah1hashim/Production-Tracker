@@ -142,7 +142,7 @@
       this[globalName] = mainExports;
     }
   }
-})({"bysI2":[function(require,module,exports) {
+})({"bWQjm":[function(require,module,exports) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
@@ -590,7 +590,7 @@ var _navViewJs = require("./views/NavView.js");
 var _navViewJsDefault = parcelHelpers.interopDefault(_navViewJs);
 var _dateViewJs = require("./views/DateView.js");
 var _dateViewJsDefault = parcelHelpers.interopDefault(_dateViewJs);
-var _footerViewJs = require("./views/footerView.js");
+var _footerViewJs = require("./views/FooterView.js");
 var _footerViewJsDefault = parcelHelpers.interopDefault(_footerViewJs);
 const controlForm = async function() {
     // 1) render Login
@@ -656,7 +656,7 @@ const init = function() {
 init();
 _moduleJs.getData();
 
-},{"./module.js":"562dW","regenerator-runtime/runtime":"dXNgZ","./views/FormView.js":"3DrWp","./views/appView.js":"dWixd","./views/WidgetView.js":"fWZ9C","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./views/MainView.js":"3EEaO","./views/NavView.js":"9JFs1","./views/footerView.js":"1Wrlt","./views/DateView.js":"lN6Bd"}],"562dW":[function(require,module,exports) {
+},{"./module.js":"562dW","regenerator-runtime/runtime":"dXNgZ","./views/FormView.js":"3DrWp","./views/appView.js":"dWixd","./views/WidgetView.js":"fWZ9C","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./views/MainView.js":"3EEaO","./views/NavView.js":"9JFs1","./views/DateView.js":"lN6Bd","./views/FooterView.js":"djcSW"}],"562dW":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "getJson", ()=>(0, _helpersJs.getJson));
@@ -1186,8 +1186,9 @@ exports.default = View;
             if (state === GenStateExecuting) throw new Error("Generator is already running");
             if (state === GenStateCompleted) {
                 if (method === "throw") throw arg;
-                // Be forgiving, per 25.3.3.3.3 of the spec:
-                // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
+                // Be forgiving, per GeneratorResume behavior specified since ES2015:
+                // ES2015 spec, step 3: https://262.ecma-international.org/6.0/#sec-generatorresume
+                // Latest spec, step 2: https://tc39.es/ecma262/#sec-generatorresume
                 return doneResult();
             }
             context.method = method;
@@ -1241,7 +1242,7 @@ exports.default = View;
         var method = delegate.iterator[methodName];
         if (method === undefined) {
             // A .throw or .return when the delegate iterator has no .throw
-            // method, or a missing .next mehtod, always terminate the
+            // method, or a missing .next method, always terminate the
             // yield* loop.
             context.delegate = null;
             // Note: ["return"] must be used for ES3 parsing compatibility.
@@ -1366,7 +1367,7 @@ exports.default = View;
         };
     };
     function values(iterable) {
-        if (iterable) {
+        if (iterable != null) {
             var iteratorMethod = iterable[iteratorSymbol];
             if (iteratorMethod) return iteratorMethod.call(iterable);
             if (typeof iterable.next === "function") return iterable;
@@ -1384,10 +1385,7 @@ exports.default = View;
                 return next.next = next;
             }
         }
-        // Return an iterator with no values.
-        return {
-            next: doneResult
-        };
+        throw new TypeError(typeof iterable + " is not iterable");
     }
     exports.values = values;
     function doneResult() {
@@ -1751,18 +1749,7 @@ class NavView extends (0, _viewDefault.default) {
 }
 exports.default = new NavView();
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./View":"gQab5"}],"1Wrlt":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-class FooterView {
-    _parenEl = document.querySelector(".footer");
-    makeDisapear() {
-        this._parenEl.innerHTML = "";
-    }
-}
-exports.default = new FooterView();
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lN6Bd":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./View":"gQab5"}],"lN6Bd":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _view = require("./View");
@@ -1786,6 +1773,17 @@ class DateView extends (0, _viewDefault.default) {
 }
 exports.default = new DateView();
 
-},{"./View":"gQab5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["bysI2","CE27q"], "CE27q", "parcelRequirea6eb")
+},{"./View":"gQab5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"djcSW":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+class FooterView {
+    _parenEl = document.querySelector(".footer");
+    makeDisapear() {
+        this._parenEl.innerHTML = "";
+    }
+}
+exports.default = new FooterView();
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["bWQjm","CE27q"], "CE27q", "parcelRequirea6eb")
 
 //# sourceMappingURL=index.0ddfc6e7.js.map

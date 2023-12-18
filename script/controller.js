@@ -6,7 +6,7 @@ import WidgetView from "./views/WidgetView.js";
 import MainView from "./views/MainView.js";
 import NavView from "./views/NavView.js";
 import DateView from "./views/DateView.js";
-import FooterView from "./views/footerView.js";
+import FooterView from "./views/FooterView.js";
 
 const controlForm = async function () {
   // 1) render Login
