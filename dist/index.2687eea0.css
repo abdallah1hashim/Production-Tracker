@@ -471,4 +471,53 @@ footer {
   }
 }
 
+@media (width <= 992px) {
+  main {
+    flex-direction: column;
+  }
+
+  .welcome h1 {
+    color: var(--light-color);
+    text-align: center;
+    align-items: center;
+    max-width: 299px;
+    margin: auto;
+    padding: 59px 0;
+    font-size: 45px;
+    display: flex;
+  }
+
+  .welcome .img__holder {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    transform: translate(0);
+  }
+
+  .img__holder img {
+    width: 95%;
+    max-width: 100%;
+  }
+
+  nav button {
+    margin-right: 15px;
+  }
+
+  nav p {
+    margin: auto 0;
+    font-size: 14px;
+    font-weight: 500;
+    transform: translate(0);
+  }
+
+  .welcome {
+    flex-direction: column;
+  }
+
+  .widget-con {
+    flex-direction: column;
+    width: 100px;
+  }
+}
+
 /*# sourceMappingURL=index.2687eea0.css.map */

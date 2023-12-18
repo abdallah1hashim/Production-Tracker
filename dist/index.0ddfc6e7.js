@@ -600,27 +600,27 @@ const controlForm = async function() {
 };
 const controlLoginPass = async function() {
     const user = document.querySelector(".log__user").value.trim();
-    const pass = document.querySelector(".log__pass").value;
+    // const pass = document.querySelector(".log__pass").value;
     if (!user) return;
     if (_moduleJs.state.users.includes(user)) {
         console.log("user is right");
-        if (!pass) console.log("enter a valid pin");
-        else if (pass === _moduleJs.state.pins[user]) {
-            await _moduleJs.getData();
-            await _moduleJs.getTeamData();
-            _moduleJs.state.curUser = user;
-            _moduleJs.setUserData();
-            (0, _mainViewJsDefault.default).hideMain();
-            (0, _appViewJsDefault.default).render(_moduleJs.state.curUserDetails);
-            (0, _appViewJsDefault.default).makeDark();
-            (0, _navViewJsDefault.default).changeClass();
-            (0, _navViewJsDefault.default).render(_moduleJs.state.curUserDetails);
-            (0, _appViewJsDefault.default).removeHide();
-            // DateView.render();
-            (0, _widgetViewJsDefault.default).addHolder();
-            (0, _footerViewJsDefault.default).makeDisapear();
-            (0, _formViewJsDefault.default).makeDisapear();
-        } else (0, _formViewJsDefault.default).renderError();
+        // if (!pass) console.log("enter a valid pin");
+        // else {
+        // if (pass === module.state.pins[user]) {
+        await _moduleJs.getData();
+        await _moduleJs.getTeamData();
+        _moduleJs.state.curUser = user;
+        _moduleJs.setUserData();
+        (0, _mainViewJsDefault.default).hideMain();
+        (0, _appViewJsDefault.default).render(_moduleJs.state.curUserDetails);
+        (0, _appViewJsDefault.default).makeDark();
+        (0, _navViewJsDefault.default).changeClass();
+        (0, _navViewJsDefault.default).render(_moduleJs.state.curUserDetails);
+        (0, _appViewJsDefault.default).removeHide();
+        // DateView.render();
+        (0, _widgetViewJsDefault.default).addHolder();
+        (0, _footerViewJsDefault.default).makeDisapear();
+        (0, _formViewJsDefault.default).makeDisapear();
     } else (0, _formViewJsDefault.default).renderError();
 };
 const controlFormClose = function() {
@@ -1585,16 +1585,16 @@ class FormView {
           <div>
             <input class="log__user" type="text" placeholder="username" />
           </div>
-          <div>
-            <input class="log__pass" type="password" placeholder="pin" />
-          </div>
           <button type="submit" class="log">
-            <i class="fa-solid fa-arrow-right-to-bracket"></i>
+          <i class="fa-solid fa-arrow-right-to-bracket"></i>
           </button>
           <div class="close__login">\u{274C}</div>
           <div class="login__error"></div>
-    `;
+          `;
     }
+    // <div>
+    //   <input class="log__pass" type="password" placeholder="pin" />
+    // </div>
     addHandlerRender(handler) {
         const nav = document.querySelector("nav");
         nav.addEventListener("click", function(e) {

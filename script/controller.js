@@ -20,34 +20,30 @@ const controlForm = async function () {
 
 const controlLoginPass = async function () {
   const user = document.querySelector(".log__user").value.trim();
-  const pass = document.querySelector(".log__pass").value;
+  // const pass = document.querySelector(".log__pass").value;
 
   if (!user) return;
 
   if (module.state.users.includes(user)) {
     console.log("user is right");
-    if (!pass) console.log("enter a valid pin");
-    else {
-      if (pass === module.state.pins[user]) {
-        await module.getData();
-        await module.getTeamData();
+    // if (!pass) console.log("enter a valid pin");
+    // else {
+    // if (pass === module.state.pins[user]) {
+    await module.getData();
+    await module.getTeamData();
 
-        module.state.curUser = user;
-        module.setUserData();
-        MainView.hideMain();
-        appView.render(module.state.curUserDetails);
-        appView.makeDark();
-        NavView.changeClass();
-        NavView.render(module.state.curUserDetails);
-        appView.removeHide();
-        // DateView.render();
-        WidgetView.addHolder();
-        FooterView.makeDisapear();
-        FormView.makeDisapear();
-      } else {
-        FormView.renderError();
-      }
-    }
+    module.state.curUser = user;
+    module.setUserData();
+    MainView.hideMain();
+    appView.render(module.state.curUserDetails);
+    appView.makeDark();
+    NavView.changeClass();
+    NavView.render(module.state.curUserDetails);
+    appView.removeHide();
+    // DateView.render();
+    WidgetView.addHolder();
+    FooterView.makeDisapear();
+    FormView.makeDisapear();
   } else {
     FormView.renderError();
   }

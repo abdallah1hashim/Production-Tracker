@@ -22,16 +22,16 @@ class FormView {
           <div>
             <input class="log__user" type="text" placeholder="username" />
           </div>
-          <div>
-            <input class="log__pass" type="password" placeholder="pin" />
-          </div>
           <button type="submit" class="log">
-            <i class="fa-solid fa-arrow-right-to-bracket"></i>
+          <i class="fa-solid fa-arrow-right-to-bracket"></i>
           </button>
           <div class="close__login">❌</div>
           <div class="login__error"></div>
-    `;
+          `;
   }
+          // <div>
+          //   <input class="log__pass" type="password" placeholder="pin" />
+          // </div>
   addHandlerRender(handler) {
     const nav = document.querySelector("nav");
     nav.addEventListener("click", function (e) {
