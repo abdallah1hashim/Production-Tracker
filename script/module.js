@@ -103,7 +103,7 @@ export const getTeamData = async function () {
     const data = await getJson(
       `https://sheets.googleapis.com/v4/spreadsheets/18xHdeVeDhXQ-ksHQjCOVskG3XmIAE4mqat2Foq-jTdw/values/'SPL%20Team%2015%2F12'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`
     );
-    // state.teams = data.values;
+    const teams = data.values;
 
     state.teams = data.values.map((t) => t[1]);
     state.teams.forEach((t, i) => {

@@ -712,7 +712,7 @@ const state = {
 };
 const getData = async function() {
     try {
-        data = await (0, _helpersJs.getJson)(`https://sheets.googleapis.com/v4/spreadsheets/18xHdeVeDhXQ-ksHQjCOVskG3XmIAE4mqat2Foq-jTdw/values/'SPL%20Labeler%2015%2F12'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`);
+        const data = await (0, _helpersJs.getJson)(`https://sheets.googleapis.com/v4/spreadsheets/18xHdeVeDhXQ-ksHQjCOVskG3XmIAE4mqat2Foq-jTdw/values/'SPL%20Labeler%2015%2F12'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`);
         state.data = data.values;
         // get all users
         data.values.forEach((value, i)=>{
@@ -743,8 +743,8 @@ const getSplByDay = async function(d, m) {
     try {
         state.day = d;
         state.month = m;
-        const data1 = await (0, _helpersJs.getJson)(`https://sheets.googleapis.com/v4/spreadsheets/18xHdeVeDhXQ-ksHQjCOVskG3XmIAE4mqat2Foq-jTdw/values/'SPL%20Labeler%20${d}%2F${m}'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`);
-        state.curUserDetails.spl = data1.values[state.usersIndex[state.curUser]];
+        const data = await (0, _helpersJs.getJson)(`https://sheets.googleapis.com/v4/spreadsheets/18xHdeVeDhXQ-ksHQjCOVskG3XmIAE4mqat2Foq-jTdw/values/'SPL%20Labeler%20${d}%2F${m}'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`);
+        state.curUserDetails.spl = data.values[state.usersIndex[state.curUser]];
         console.log(state);
     } catch (err) {
         console.error(err);
@@ -753,9 +753,9 @@ const getSplByDay = async function(d, m) {
 };
 const getTeamData = async function() {
     try {
-        const data1 = await (0, _helpersJs.getJson)(`https://sheets.googleapis.com/v4/spreadsheets/18xHdeVeDhXQ-ksHQjCOVskG3XmIAE4mqat2Foq-jTdw/values/'SPL%20Team%2015%2F12'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`);
-        teams = data1.values;
-        state.teams = data1.values.map((t)=>t[1]);
+        const data = await (0, _helpersJs.getJson)(`https://sheets.googleapis.com/v4/spreadsheets/18xHdeVeDhXQ-ksHQjCOVskG3XmIAE4mqat2Foq-jTdw/values/'SPL%20Team%2015%2F12'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`);
+        const teams = data.values;
+        state.teams = data.values.map((t)=>t[1]);
         state.teams.forEach((t, i)=>{
             state.teamsIndex[t] = {
                 fp: i,
@@ -772,8 +772,8 @@ const getTeamSplByDay = async function(d, m) {
     try {
         state.day = d;
         state.month = m;
-        const data1 = await (0, _helpersJs.getJson)(`https://sheets.googleapis.com/v4/spreadsheets/18xHdeVeDhXQ-ksHQjCOVskG3XmIAE4mqat2Foq-jTdw/values/'SPL%20Team%20${d}%2F${m}'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`);
-        state.teamsData = data1.values;
+        const data = await (0, _helpersJs.getJson)(`https://sheets.googleapis.com/v4/spreadsheets/18xHdeVeDhXQ-ksHQjCOVskG3XmIAE4mqat2Foq-jTdw/values/'SPL%20Team%20${d}%2F${m}'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`);
+        state.teamsData = data.values;
         const index = state.teams.indexOf(state.curUserDetails.team);
         console.log(state.teamsData[index]);
         state.curUserDetails.teamspl = state.teamsData[index];
