@@ -18,7 +18,7 @@ class FormView {
 
   _generateMarkup() {
     return `
-          <h3>Login</h3>
+          <h3>Search</h3>
           <div>
             <input class="log__user" type="text" placeholder="username" />
           </div>
@@ -29,9 +29,9 @@ class FormView {
           <div class="login__error"></div>
           `;
   }
-          // <div>
-          //   <input class="log__pass" type="password" placeholder="pin" />
-          // </div>
+  // <div>
+  //   <input class="log__pass" type="password" placeholder="pin" />
+  // </div>
   addHandlerRender(handler) {
     const nav = document.querySelector("nav");
     nav.addEventListener("click", function (e) {
