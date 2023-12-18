@@ -45,7 +45,7 @@ export const state = {
 
 export const getData = async function () {
   try {
-    data = await getJson(
+    const data = await getJson(
       `https://sheets.googleapis.com/v4/spreadsheets/18xHdeVeDhXQ-ksHQjCOVskG3XmIAE4mqat2Foq-jTdw/values/'SPL%20Labeler%2015%2F12'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`
     );
 
