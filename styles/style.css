@@ -341,6 +341,9 @@ main .welcome {
   background-color: var(--widget-background);
   height: 800px;
   width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .wid {
@@ -379,6 +382,7 @@ main .welcome {
 .content {
   display: flex;
 }
+.tab-content-wrapper-lb,
 .tab-content-wrapper {
   overflow-y: hidden;
   overflow-x: auto;
@@ -386,7 +390,8 @@ main .welcome {
   transition: all 0.45s ease-in-out;
   padding: 0 16px;
 }
-.tab-content h2 {
+.tab-content h2,
+.tab-content-lb h2 {
   color: var(--white);
   font-size: 1.2rem;
   font-weight: 600;
@@ -394,7 +399,8 @@ main .welcome {
   margin-bottom: 8px;
 }
 
-.tab-content {
+.tab-content,
+.tab-content-lb {
   font-size: 0.8rem;
   min-height: 300px;
   min-width: 240px;
@@ -404,7 +410,8 @@ main .welcome {
   transition: all 0.45s ease-in-out;
 }
 
-.tabs {
+.tabs,
+.tabs-lb {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -414,7 +421,8 @@ main .welcome {
   gap: 8px;
 }
 
-.tabs a {
+.tabs a,
+.tabs-lb a {
   position: relative;
   display: flex;
   text-decoration: none;
@@ -433,13 +441,9 @@ main .welcome {
   transition: all 0.45s ease-in-out;
 }
 
-.tabs a img {
-  height: 20px;
-  width: 20px;
-}
-
 .tabs .active,
-.tabs a:hover {
+.tabs-lb .active,
+.tabs-lb a:hover .tabs a:hover {
   outline: none;
   background-color: var(--primary);
   border: 1px solid var(--primary-border);
@@ -456,7 +460,7 @@ main .welcome {
 .hide {
   position: absolute;
   top: -1px;
-  left: -600px;
+  left: -1000px;
 }
 
 footer {
@@ -471,6 +475,7 @@ footer {
 }
 .spinner i {
   animation: rotateSpinner 1s linear infinite;
+  font-size: 40px;
 }
 
 @keyframes rotateSpinner {
@@ -524,5 +529,13 @@ footer {
   .widget-con {
     flex-direction: column;
     width: 100px;
+    transition: 1s;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
+}
+.widget__sec {
+  position: relative;
+  height: 815px;
 }

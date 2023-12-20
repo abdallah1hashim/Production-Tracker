@@ -1,122 +1,78 @@
 import View from "./View";
 
-class widget extends View {
+class Widget extends View {
   _parentEl = document.querySelector(".widget-con");
 
-  renderError() {
-    this._clear();
-    const message = `<p style="color:red">Faild to fetch your data :< Make sure you entered the right date!"</p>`;
-    this._parentEl.insertAdjacentHTML("afterbegin", message);
+  _allTabs = document.querySelectorAll(".tab-content-lb");
+  _allLinks = document.querySelectorAll(".tabs-lb a");
+  _tabContentWrapper = document.querySelector(".tab-content-wrapper-lb");
+  _allTabsTeam = document.querySelectorAll(".tab-content");
+  _allLinksTeam = document.querySelectorAll(".tabs a");
+  _tabContentWrapperTeam = document.querySelector(".tab-content-wrapper");
+
+  shiftTabs = (linkId) => {
+    this._allTabs.forEach((tab, i) => {
+      if (tab.id.includes(linkId)) {
+        this._allTabs.forEach((tabItem) => {
+          tabItem.style = `transform: translateY(-${i * 300}px);`;
+        });
+      }
+    });
+  };
+
+  addHandlerSlide() {
+    this._parentEl.addEventListener("click", (e) => {
+      e.preventDefault();
+      const link = e.target.closest(".tabs-lb a");
+      if (!link || link.classList.contains("active")) return;
+
+      // Remove "active" class from all links
+      this._allLinks.forEach((linkItem) => {
+        linkItem.classList.remove("active");
+      });
+
+      // Add "active" class to the clicked link
+      link.classList.add("active");
+
+      // Get the linkId from the clicked link
+      const linkId = link.id;
+
+      // Call the shiftTabs method to handle the tab shift
+      this.shiftTabs(linkId);
+    });
   }
 
-  _generateMarkup() {
-    return `
-          <div class="wid">
-            <h2 class="wid-heading">Labeler</h2>
-            <div class="content">
-              <ul class="tabs">
-                <li><a class="active" title="SPL" href="#tab1"><i class="fa-solid fa-gauge"></i>SPL</a></li>
-                <li><a title="Time" href="#tab2"><i class="fa-solid fa-clock"></i>Hours</i></a></li>
-              </ul>
-              <div class="tab-content-wrapper">
+  shiftTabsTeam = (linkId) => {
+    this._allTabsTeam.forEach((tab, i) => {
+      if (tab.id.includes(linkId)) {
+        this._allTabsTeam.forEach((tabItem) => {
+          tabItem.style = `transform: translateY(-${i * 300}px);`;
+        });
+      }
+    });
+  };
 
-                <article class="tab-content" id="tab1-content">
+  addHandlerSlideTeam() {
+    this._parentEl.addEventListener("click", (e) => {
+      e.preventDefault();
+      const link = e.target.closest(".tabs a");
+      if (!link || link.classList.contains("active")) return;
 
-                    ${this.generateOptions(this._data.curUserDetails)}
-                  
+      // Remove "active" class from all links
+      this._allLinksTeam.forEach((linkItem) => {
+        linkItem.classList.remove("active");
+      });
 
-                </article>
+      // Add "active" class to the clicked link
+      link.classList.add("active");
 
-                <article class="tab-content" id="tab2-content">
-                  <p>Your Hours</p>
-                  <h3>0.00</h3>
-                </article>
-              </div>
-            </div>  
-          </div>
-          <div class="wid">
-            <h2 class="wid-heading">Team</h2>
-            <div class="content">
-              <ul class="tabs">
-                <li><a class="active" title="SPL" href="#tab1"><i class="fa-solid fa-gauge"></i>SPL</a></li>
-                <li><a title="Time" href="#tab2"><i class="fa-solid fa-clock"></i>Hours</i></a></li>
-              </ul>
-              <div class="tab-content-wrapper">
+      // Get the linkId from the clicked link
+      const linkId = link.id;
 
-                <article class="tab-content" id="tab1-content">
-                ${this.generateOptionsForTeam(this._data.curUserDetails)}
-                </article>
-
-                <article class="tab-content" id="tab2-content">
-                  <p>Your Hours</p>
-                  <h3>0.00</h3>
-                </article>
-              </div>
-            </div>  
-          </div>
-    `;
-  }
-
-  // ${this.generateOptionsForTeam(this._data.queues)};
-  generateOptions(queues) {
-    return queues.spl
-      .map((li, i) => {
-        if (i < 7) return;
-        if (!li) return;
-        return `
-        <div class="lap-spl-text">
-          <p>${this._data.queues[i]}</p>
-          <h3>${(+li).toFixed(3) || "NONE"}</h3>
-        </div>
-        `;
-      })
-      .join("");
-  }
-  generateOptionsForTeam(queues) {
-    return queues.teamspl
-      .map((li, i) => {
-        if (i < 3) return;
-        if (!li) return;
-        return `
-        <div class="lap-spl-text">
-          <p>${this._data.queues[i + 4]}</p>
-          <h3>${(+li).toFixed(3) || "NONE"}</h3>
-        </div>
-        `;
-      })
-      .join("");
-  }
-
-  addHolder() {
-    const child = `<div class="holder"></div>`;
-    this._parentEl.insertAdjacentHTML("afterbegin", child);
+      // Call the shiftTabs method to handle the tab shift
+      this.shiftTabsTeam(linkId);
+    });
   }
 }
 
-// getQueue() {
-//   let lablersQ = document.querySelector(".Labeler-spl-options").value;
-//   let teamQ = document.querySelector(".team-spl-options").value;
-//   return { lablersQ, teamQ };
-// }
-
-// addHandlerPickLQ(handler) {
-//   // this._parentEl.addEventListener("click", (e) => {
-//   //   const optionQ = e.target.closest(".labelerBtn");
-//   //   if (!optionQ) return;
-//   const labelerDropdown = this._parentEl.querySelector(
-//     ".Labeler-spl-options"
-//   );
-
-//   if (labelerDropdown) {
-//     labelerDropdown.addEventListener("change", () => {
-//       const labelersQ = labelerDropdown.value;
-//       console.log(labelersQ);
-//       handler();
-//     });
-//   } else {
-//     console.error("Labeler dropdown element not found.");
-//   }
-//   // }
-// }
-
-export default new widget();
+export default new Widget();

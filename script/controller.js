@@ -7,6 +7,10 @@ import MainView from "./views/MainView.js";
 import NavView from "./views/NavView.js";
 import DateView from "./views/DateView.js";
 import FooterView from "./views/FooterView.js";
+import SplTabView from "./views/SplTabView.js";
+import SplTeamView from "./views/SplTeamView.js";
+import HoursLabelerView from "./views/HoursLabeler.js";
+import HoursTeamView from "./views/HoursTeamView.js";
 
 const controlForm = async function () {
   // 1) render Login
@@ -19,7 +23,7 @@ const controlForm = async function () {
 };
 
 const controlLoginPass = async function () {
-  const user = document.querySelector(".log__user").value.trim();
+  const user = document.querySelector(".log__user").value.trim().toUpperCase();
   // const pass = document.querySelector(".log__pass").value;
 
   if (!user) return;
@@ -41,7 +45,6 @@ const controlLoginPass = async function () {
     NavView.render(module.state.curUserDetails);
     appView.removeHide();
     // DateView.render();
-    WidgetView.addHolder();
     FooterView.makeDisapear();
     FormView.makeDisapear();
   } else {
@@ -54,21 +57,27 @@ const controlFormClose = function () {
 };
 
 const controlSpl = async function () {
-  const { month, day } = DateView.getDate();
+  try {
+    const { month, day } = DateView.getDate();
 
-  await module.getSplByDay(day, month);
-  await module.getTeamSplByDay(day, month);
+    SplTabView.renderSpinner();
+    SplTeamView.renderSpinner();
 
-  WidgetView._renderSpinner();
-  WidgetView.render(module.state);
+    await module.getSplByDay(day, month);
+    await module.getHours(day, month);
+    await module.getTeamSplByDay(day, month);
+    await module.getHoursTeam(day, month);
+
+    WidgetView._hideView(document.querySelector(".holder"));
+    WidgetView._ShowView(document.querySelector(".widget-con"));
+    SplTabView.render(module.state);
+    SplTeamView.render(module.state);
+    HoursLabelerView.render(module.state);
+    HoursTeamView.render(module.state);
+  } catch (err) {
+    console.error(err);
+  }
 };
-
-// const controlSPLQ = function (o) {
-//   console.log("yes");
-
-//   console.log(module.state);
-//   // LabelerSPLView.render(module.state);
-// };
 
 const controlLogout = function () {
   appView._clear();
@@ -77,6 +86,24 @@ const controlLogout = function () {
   window.location.reload();
 };
 
+// const controlSlide = function () {
+//   window.currentHash = window.location.hash;
+//   let activeLink = document.querySelector(`.tabs a`);
+
+//   if (window.currentHash) {
+//     const visibleHash = document.getElementById(
+//       `${this.currentHash.replace("#", "")}`
+//     );
+
+//     if (visibleHash) {
+//       activeLink = visibleHash;
+//     }
+//   }
+
+//   activeLink.classList.add("active");
+//   WidgetView._shiftTabs(activeLink.id);
+// };
+
 const init = function () {
   // NavView.addHandlerLogin(controlLogin);
   FormView.addHandlerCloseForm(controlFormClose);
@@ -84,7 +111,8 @@ const init = function () {
   FormView.addHandlerLogin(controlLoginPass);
   DateView.addHandlerdate(controlSpl);
   NavView.addHandlerLogout(controlLogout);
-  // WidgetView.addHandlerPickLQ(controlSPLQ);
+  WidgetView.addHandlerSlide();
+  WidgetView.addHandlerSlideTeam();
 };
 // module.getData();
 init();

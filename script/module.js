@@ -18,8 +18,7 @@ export const months = [
   "December",
 ];
 export const state = {
-  wantedLQ: "",
-  wantedTQ: "",
+  hours: ["Lidar Hours", "Image Hours", "ATOT %"],
   data: [],
   users: [],
   teams: "",
@@ -28,8 +27,9 @@ export const state = {
   pins: {},
   names: [],
   queues: {},
+
   curUser: "",
-  teamsData: "",
+  teamsData: {},
   curUserDetails: {
     name: "",
     shift: "",
@@ -73,8 +73,11 @@ export const getData = async function () {
       state.queues[i] = value;
     });
 
-    console.log(data.values);
     console.log(state);
+    // console.log(data.values);
+    // data.values.forEach(item =>{
+    //   state.info.item[6];
+    // })
     return data;
   } catch (err) {
     console.error(err);
@@ -86,15 +89,24 @@ export const getSplByDay = async function (d, m) {
     state.day = d;
     state.month = m;
 
-    const data = await getJson(
-      `https://sheets.googleapis.com/v4/spreadsheets/18xHdeVeDhXQ-ksHQjCOVskG3XmIAE4mqat2Foq-jTdw/values/'SPL%20Labeler%20${d}%2F${m}'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`
-    );
+    let data;
 
+    if (d === 26) {
+      data = await getJson(
+        `https://sheets.googleapis.com/v4/spreadsheets/1nt2hFgLSvFXHpHEgOe989W88u0xJlTfHgI8fd7_eaj8/values/'SPL%20Labeler${d}%2F${m}'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`
+      );
+    }
+    if (d !== 26) {
+      data = await getJson(
+        `https://sheets.googleapis.com/v4/spreadsheets/1nt2hFgLSvFXHpHEgOe989W88u0xJlTfHgI8fd7_eaj8/values/'SPL%20Labeler%20${d}%2F${m}'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`
+      );
+    }
+
+    state.curUserDetails.curQueue = data.values[0];
     state.curUserDetails.spl = data.values[state.usersIndex[state.curUser]];
     console.log(state);
   } catch (err) {
-    console.error(err);
-    WidgetView.renderError();
+    throw err;
   }
 };
 
@@ -125,13 +137,13 @@ export const getTeamSplByDay = async function (d, m) {
     state.month = m;
 
     const data = await getJson(
-      `https://sheets.googleapis.com/v4/spreadsheets/18xHdeVeDhXQ-ksHQjCOVskG3XmIAE4mqat2Foq-jTdw/values/'SPL%20Team%20${d}%2F${m}'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`
+      `https://sheets.googleapis.com/v4/spreadsheets/1nt2hFgLSvFXHpHEgOe989W88u0xJlTfHgI8fd7_eaj8/values/'SPL%20TEAM%20${d}%2F${m}'!1:25?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`
     );
-    state.teamsData = data.values;
-    const index = state.teams.indexOf(state.curUserDetails.team);
-    console.log(state.teamsData[index]);
 
-    state.curUserDetails.teamspl = state.teamsData[index];
+    state.teamsData.spl = data.values;
+    const index = state.teams.indexOf(state.curUserDetails.team);
+
+    state.curUserDetails.teamspl = state.teamsData.spl[index];
   } catch (err) {
     console.error(err);
   }
@@ -148,3 +160,28 @@ export const setUserData = function () {
   console.log(state.curUser);
 };
 //      `https://sheets.googleapis.com/v4/spreadsheets/18xHdeVeDhXQ-ksHQjCOVskG3XmIAE4mqat2Foq-jTdw/values/'SPL%20Labeler%2026%2F11'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`
+
+export const getHours = async function (d, m) {
+  try {
+    const data = await getJson(
+      `https://sheets.googleapis.com/v4/spreadsheets/14gN2ZKMFrqwKenVUarpSEC7WBZ4JwXWcMui21TpqWWY/values/'ATOT%20per%20labeler%20${d}%2F${m}'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`
+    );
+    state.curUserDetails.hours = data.values[state.usersIndex[state.curUser]];
+  } catch (err) {
+    console.error(err);
+  }
+};
+export const getHoursTeam = async function (d, m) {
+  try {
+    const data = await getJson(
+      `https://sheets.googleapis.com/v4/spreadsheets/14gN2ZKMFrqwKenVUarpSEC7WBZ4JwXWcMui21TpqWWY/values/'ATOT%20per%20Team%20${d}%2F${m}'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`
+    );
+    const index = state.teams.indexOf(state.curUserDetails.team);
+
+    state.teamsData.hours = data.values;
+    state.curUserDetails.teamHours = state.teamsData.hours[index];
+    console.log(state);
+  } catch (err) {
+    console.error(err);
+  }
+};

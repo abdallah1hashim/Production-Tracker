@@ -61,7 +61,7 @@
     <main class="d-flex align-items-center p-0">
       <div class="container">
         <div class="welcome">
-          <h1>OverNight Poduction Tracker</h1>
+          <h1>OverNight Production Tracker</h1>
           <div class="img__holder">
             <img src="/assets/pics/8-bTniNGuczY85cuG-removebg.webp" />
           </div>
@@ -138,65 +138,54 @@
           <button class="search">Search</button>
         </div>
 
-        <div class="widget-con">
-          <!-- <div class="holder"></div> -->
+     <div class="widget__sec">
+      <div class="holder"></div>
+      <div class="widget-con opacity-0 z-drop">
 
-          <!-- <div class="wid">
+          
+        <div class="wid">
           <h2 class="wid-heading">Labeler</h2>
           <div class="content">
-            <ul class="tabs">
-              <li><a class="active" title="SPL" href="#tab1"><i class="fa-solid fa-gauge"></i>SPL</a></li>
-              <li><a title="Time" href="#tab2"><i class="fa-solid fa-clock"></i>Hours</i></a></li>
+            <ul class="tabs-lb">
+              <li><a id="lab1" class="active" title="SPL" href="#tab1"><i class="fa-solid fa-gauge"></i>SPL</a></li>
+              <li><a id="lab2" title="Time" href="#tab2"><i class="fa-solid fa-clock"></i>Hours</i></a></li>
             </ul>
-            <div class="tab-content-wrapper">
-
-              <article class="tab-content" id="tab1-content">
-                <select class="Labeler-spl-options">
-                  <option value="6">CLM FP</option>
-                </select>
-
-                <div class="labeler-spl-text">
-                
-                  <p>Your SPL</p>
+            <div class="tab-content-wrapper-lb">
+              <article class="tab-content-lb spl__labeler" id="lab1-content">
+                <p>Your SPL</p>
                 <h3>0.00</h3>
-                
-              </div>
-
-
               </article>
-
-              <article class="tab-content" id="tab2-content">
+              <article class="tab-content-lb hours-labeler" id="lab2-content">
                 <p>Your Hours</p>
                 <h3>0.00</h3>
               </article>
             </div>
           </div>  
         </div>
+
         <div class="wid">
           <h2 class="wid-heading">Team</h2>
           <div class="content">
             <ul class="tabs">
-              <li><a class="active" title="SPL" href="#tab1"><i class="fa-solid fa-gauge"></i>SPL</a></li>
-              <li><a title="Time" href="#tab2"><i class="fa-solid fa-clock"></i>Hours</i></a></li>
+              <li><a id="team1" class="active" title="SPL" href="#tab1"><i class="fa-solid fa-gauge"></i>SPL</a></li>
+              <li><a id="team2" title="Time" href="#tab2"><i class="fa-solid fa-clock"></i>Hours</i></a></li>
             </ul>
             <div class="tab-content-wrapper">
 
-              <article class="tab-content" id="tab1-content">
-                <select class="team-spl-options">
-                  <option value="3">CLM FP</option>
-                </select>
+              <article class="tab-content spl__Team" id="team1-content">
                 <p>Your SPL</p>
                 <h3>0.00</h3>
               </article>
 
-              <article class="tab-content" id="tab2-content">
+              <article class="tab-content hours-Team" id="team2-content">
                 <p>Your Hours</p>
                 <h3>0.00</h3>
               </article>
             </div>
           </div>  
-        </div> -->
-        </div>
+         </div>
+       </div>
+    </div>
 
         <!-- <p class="note">
               ⚠️ you will recive deduction based on your avrage SPL if more than
