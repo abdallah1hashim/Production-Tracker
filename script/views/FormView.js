@@ -20,7 +20,7 @@ class FormView {
     return `
           <h3>Search</h3>
           <div>
-            <input class="log__user" type="text" placeholder="username" />
+            <input class="log__user" type="text" placeholder="Enter an ID" />
           </div>
           <button type="submit" class="log">
           <i class="fa-solid fa-arrow-right-to-bracket"></i>
