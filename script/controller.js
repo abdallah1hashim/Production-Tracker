@@ -62,18 +62,36 @@ const controlSpl = async function () {
 
     SplTabView.renderSpinner();
     SplTeamView.renderSpinner();
+    HoursLabelerView.renderSpinner();
+    HoursTeamView.renderSpinner();
 
-    await module.getSplByDay(day, month);
-    await module.getHours(day, month);
-    await module.getTeamSplByDay(day, month);
-    await module.getHoursTeam(day, month);
+    try {
+      await module.getSplByDay(day, month);
+      SplTabView.render(module.state);
+    } catch (err) {
+      SplTabView.renderError();
+    }
+    try {
+      await module.getHours(day, month);
+      HoursLabelerView.render(module.state);
+    } catch (err) {
+      HoursLabelerView.renderError();
+    }
+    try {
+      await module.getTeamSplByDay(day, month);
+      SplTeamView.render(module.state);
+    } catch (err) {
+      SplTeamView.renderError();
+    }
+    try {
+      await module.getHoursTeam(day, month);
+      HoursTeamView.render(module.state);
+    } catch (err) {
+      HoursTeamView.renderError();
+    }
 
     WidgetView._hideView(document.querySelector(".holder"));
     WidgetView._ShowView(document.querySelector(".widget-con"));
-    SplTabView.render(module.state);
-    SplTeamView.render(module.state);
-    HoursLabelerView.render(module.state);
-    HoursTeamView.render(module.state);
   } catch (err) {
     console.error(err);
   }
