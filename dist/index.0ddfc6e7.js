@@ -142,7 +142,7 @@
       this[globalName] = mainExports;
     }
   }
-})({"bysI2":[function(require,module,exports) {
+})({"bWQjm":[function(require,module,exports) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
@@ -592,6 +592,14 @@ var _dateViewJs = require("./views/DateView.js");
 var _dateViewJsDefault = parcelHelpers.interopDefault(_dateViewJs);
 var _footerViewJs = require("./views/FooterView.js");
 var _footerViewJsDefault = parcelHelpers.interopDefault(_footerViewJs);
+var _splTabViewJs = require("./views/SplTabView.js");
+var _splTabViewJsDefault = parcelHelpers.interopDefault(_splTabViewJs);
+var _splTeamViewJs = require("./views/SplTeamView.js");
+var _splTeamViewJsDefault = parcelHelpers.interopDefault(_splTeamViewJs);
+var _hoursLabelerJs = require("./views/HoursLabeler.js");
+var _hoursLabelerJsDefault = parcelHelpers.interopDefault(_hoursLabelerJs);
+var _hoursTeamViewJs = require("./views/HoursTeamView.js");
+var _hoursTeamViewJsDefault = parcelHelpers.interopDefault(_hoursTeamViewJs);
 const controlForm = async function() {
     // 1) render Login
     (0, _formViewJsDefault.default).render();
@@ -599,7 +607,7 @@ const controlForm = async function() {
     if (_moduleJs.state.users.includes((0, _formViewJsDefault.default).userName)) console.log("user exists");
 };
 const controlLoginPass = async function() {
-    const user = document.querySelector(".log__user").value.trim();
+    const user = document.querySelector(".log__user").value.trim().toUpperCase();
     // const pass = document.querySelector(".log__pass").value;
     if (!user) return;
     if (_moduleJs.state.users.includes(user)) {
@@ -618,7 +626,6 @@ const controlLoginPass = async function() {
         (0, _navViewJsDefault.default).render(_moduleJs.state.curUserDetails);
         (0, _appViewJsDefault.default).removeHide();
         // DateView.render();
-        (0, _widgetViewJsDefault.default).addHolder();
         (0, _footerViewJsDefault.default).makeDisapear();
         (0, _formViewJsDefault.default).makeDisapear();
     } else (0, _formViewJsDefault.default).renderError();
@@ -628,26 +635,57 @@ const controlFormClose = function() {
 };
 const controlSpl = async function() {
     const { month, day } = (0, _dateViewJsDefault.default).getDate();
-    await _moduleJs.getSplByDay(day, month);
-    await _moduleJs.getHours(day, month);
-    await _moduleJs.getTeamSplByDay(day, month);
-    (0, _widgetViewJsDefault.default)._renderSpinner();
-    (0, _widgetViewJsDefault.default).render(_moduleJs.state);
+    (0, _splTabViewJsDefault.default).renderSpinner();
+    (0, _splTeamViewJsDefault.default).renderSpinner();
+    (0, _hoursLabelerJsDefault.default).renderSpinner();
+    (0, _hoursTeamViewJsDefault.default).renderSpinner();
+    try {
+        await _moduleJs.getSplByDay(day, month);
+        (0, _splTabViewJsDefault.default).render(_moduleJs.state);
+    } catch (err) {
+        (0, _splTabViewJsDefault.default).renderError();
+    }
+    try {
+        await _moduleJs.getHours(day, month);
+        (0, _hoursLabelerJsDefault.default).render(_moduleJs.state);
+    } catch (err) {
+        (0, _hoursLabelerJsDefault.default).renderError();
+    }
+    try {
+        await _moduleJs.getTeamSplByDay(day, month);
+        (0, _splTeamViewJsDefault.default).render(_moduleJs.state);
+    } catch (err) {
+        (0, _splTeamViewJsDefault.default).renderError();
+    }
+    try {
+        await _moduleJs.getHoursTeam(day, month);
+        (0, _hoursTeamViewJsDefault.default).render(_moduleJs.state);
+    } catch (err) {
+        (0, _hoursTeamViewJsDefault.default).renderError();
+    }
+    (0, _widgetViewJsDefault.default)._hideView(document.querySelector(".holder"));
+    (0, _widgetViewJsDefault.default)._ShowView(document.querySelector(".widget-con"));
 };
-// const controlSPLQ = function (o) {
-//   console.log("yes");
-//   console.log(module.state);
-//   // LabelerSPLView.render(module.state);
-// };
 const controlLogout = function() {
     (0, _appViewJsDefault.default)._clear();
     (0, _dateViewJsDefault.default)._clear();
     (0, _widgetViewJsDefault.default)._clear();
     window.location.reload();
 };
-// const controlSlide= function() {
-//  console.log("");
-// }
+// const controlSlide = function () {
+//   window.currentHash = window.location.hash;
+//   let activeLink = document.querySelector(`.tabs a`);
+//   if (window.currentHash) {
+//     const visibleHash = document.getElementById(
+//       `${this.currentHash.replace("#", "")}`
+//     );
+//     if (visibleHash) {
+//       activeLink = visibleHash;
+//     }
+//   }
+//   activeLink.classList.add("active");
+//   WidgetView._shiftTabs(activeLink.id);
+// };
 const init = function() {
     // NavView.addHandlerLogin(controlLogin);
     (0, _formViewJsDefault.default).addHandlerCloseForm(controlFormClose);
@@ -655,14 +693,14 @@ const init = function() {
     (0, _formViewJsDefault.default).addHandlerLogin(controlLoginPass);
     (0, _dateViewJsDefault.default).addHandlerdate(controlSpl);
     (0, _navViewJsDefault.default).addHandlerLogout(controlLogout);
-    // WidgetView.addHandlerPickLQ(controlSPLQ);
     (0, _widgetViewJsDefault.default).addHandlerSlide();
+    (0, _widgetViewJsDefault.default).addHandlerSlideTeam();
 };
 // module.getData();
 init();
 _moduleJs.getData();
 
-},{"./module.js":"562dW","regenerator-runtime/runtime":"dXNgZ","./views/FormView.js":"3DrWp","./views/appView.js":"dWixd","./views/WidgetView.js":"fWZ9C","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./views/MainView.js":"3EEaO","./views/NavView.js":"9JFs1","./views/DateView.js":"lN6Bd","./views/FooterView.js":"djcSW"}],"562dW":[function(require,module,exports) {
+},{"./module.js":"562dW","regenerator-runtime/runtime":"dXNgZ","./views/FormView.js":"3DrWp","./views/appView.js":"dWixd","./views/WidgetView.js":"fWZ9C","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./views/MainView.js":"3EEaO","./views/NavView.js":"9JFs1","./views/DateView.js":"lN6Bd","./views/FooterView.js":"djcSW","./views/SplTabView.js":"cD0Qp","./views/SplTeamView.js":"gIpUh","./views/HoursLabeler.js":"kRvsV","./views/HoursTeamView.js":"6WDT6"}],"562dW":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "getJson", ()=>(0, _helpersJs.getJson));
@@ -674,6 +712,7 @@ parcelHelpers.export(exports, "getTeamData", ()=>getTeamData);
 parcelHelpers.export(exports, "getTeamSplByDay", ()=>getTeamSplByDay);
 parcelHelpers.export(exports, "setUserData", ()=>setUserData);
 parcelHelpers.export(exports, "getHours", ()=>getHours);
+parcelHelpers.export(exports, "getHoursTeam", ()=>getHoursTeam);
 var _helpersJs = require("./helpers.js");
 var _widgetViewJs = require("./views/WidgetView.js");
 var _widgetViewJsDefault = parcelHelpers.interopDefault(_widgetViewJs);
@@ -706,7 +745,7 @@ const state = {
     names: [],
     queues: {},
     curUser: "",
-    teamsData: "",
+    teamsData: {},
     curUserDetails: {
         name: "",
         shift: "",
@@ -742,6 +781,10 @@ const getData = async function() {
             state.queues[i] = value;
         });
         console.log(state);
+        // console.log(data.values);
+        // data.values.forEach(item =>{
+        //   state.info.item[6];
+        // })
         return data;
     } catch (err) {
         console.error(err);
@@ -754,11 +797,11 @@ const getSplByDay = async function(d, m) {
         let data;
         if (d === 26) data = await (0, _helpersJs.getJson)(`https://sheets.googleapis.com/v4/spreadsheets/1nt2hFgLSvFXHpHEgOe989W88u0xJlTfHgI8fd7_eaj8/values/'SPL%20Labeler${d}%2F${m}'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`);
         if (d !== 26) data = await (0, _helpersJs.getJson)(`https://sheets.googleapis.com/v4/spreadsheets/1nt2hFgLSvFXHpHEgOe989W88u0xJlTfHgI8fd7_eaj8/values/'SPL%20Labeler%20${d}%2F${m}'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`);
+        state.curUserDetails.curQueue = data.values[0];
         state.curUserDetails.spl = data.values[state.usersIndex[state.curUser]];
         console.log(state);
     } catch (err) {
-        console.error(err);
-        (0, _widgetViewJsDefault.default).renderError();
+        throw err;
     }
 };
 const getTeamData = async function() {
@@ -782,11 +825,10 @@ const getTeamSplByDay = async function(d, m) {
     try {
         state.day = d;
         state.month = m;
-        const data = await (0, _helpersJs.getJson)(`https://sheets.googleapis.com/v4/spreadsheets/18xHdeVeDhXQ-ksHQjCOVskG3XmIAE4mqat2Foq-jTdw/values/'SPL%20Team%20${d}%2F${m}'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`);
-        state.teamsData = data.values;
+        const data = await (0, _helpersJs.getJson)(`https://sheets.googleapis.com/v4/spreadsheets/1nt2hFgLSvFXHpHEgOe989W88u0xJlTfHgI8fd7_eaj8/values/'SPL%20TEAM%20${d}%2F${m}'!1:25?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`);
+        state.teamsData.spl = data.values;
         const index = state.teams.indexOf(state.curUserDetails.team);
-        console.log(state.teamsData[index]);
-        state.curUserDetails.teamspl = state.teamsData[index];
+        state.curUserDetails.teamspl = state.teamsData.spl[index];
     } catch (err) {
         console.error(err);
     }
@@ -802,8 +844,18 @@ const setUserData = function() {
 };
 const getHours = async function(d, m) {
     try {
-        const data = await (0, _helpersJs.getJson)(`https://sheets.googleapis.com/v4/spreadsheets/14gN2ZKMFrqwKenVUarpSEC7WBZ4JwXWcMui21TpqWWY/values/'ATOT%20per%20Labeler%20${d}%2F${m}'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`);
+        const data = await (0, _helpersJs.getJson)(`https://sheets.googleapis.com/v4/spreadsheets/14gN2ZKMFrqwKenVUarpSEC7WBZ4JwXWcMui21TpqWWY/values/'ATOT%20per%20labeler%20${d}%2F${m}'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`);
         state.curUserDetails.hours = data.values[state.usersIndex[state.curUser]];
+    } catch (err) {
+        console.error(err);
+    }
+};
+const getHoursTeam = async function(d, m) {
+    try {
+        const data = await (0, _helpersJs.getJson)(`https://sheets.googleapis.com/v4/spreadsheets/14gN2ZKMFrqwKenVUarpSEC7WBZ4JwXWcMui21TpqWWY/values/'ATOT%20per%20Team%20${d}%2F${m}'!1:1029?key=AIzaSyA1DiDSTDT-E1KtlFhUpeecLxnKh_Uxxf8`);
+        const index = state.teams.indexOf(state.curUserDetails.team);
+        state.teamsData.hours = data.values;
+        state.curUserDetails.teamHours = state.teamsData.hours[index];
         console.log(state);
     } catch (err) {
         console.error(err);
@@ -860,156 +912,64 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _view = require("./View");
 var _viewDefault = parcelHelpers.interopDefault(_view);
-class widget extends (0, _viewDefault.default) {
+class Widget extends (0, _viewDefault.default) {
     _parentEl = document.querySelector(".widget-con");
-    renderError() {
-        this._clear();
-        const message = `<p style="color:red">Faild to fetch your data :< Make sure you entered the right date!"</p>`;
-        this._parentEl.insertAdjacentHTML("afterbegin", message);
-    }
-    _generateMarkup() {
-        return `
-          <div class="wid">
-            <h2 class="wid-heading">Labeler</h2>
-            <div class="content">
-              <ul class="tabs">
-                <li><a class="active" title="SPL" href="#tab1"><i class="fa-solid fa-gauge"></i>SPL</a></li>
-                <li><a title="Time" href="#tab2"><i class="fa-solid fa-clock"></i>Hours</i></a></li>
-              </ul>
-              <div class="tab-content-wrapper">
-
-                <article class="tab-content" id="tab1-content">
-
-                    ${this.generateOptions(this._data.curUserDetails)}
-                  
-
-                </article>
-
-                <article class="tab-content" id="tab2-content">
-                  ${this.generatehours(this._data.curUserDetails)}
-                </article>
-              </div>
-            </div>  
-          </div>
-          <div class="wid">
-            <h2 class="wid-heading">Team</h2>
-            <div class="content">
-              <ul class="tabs">
-                <li><a class="active" title="SPL" href="#tab1"><i class="fa-solid fa-gauge"></i>SPL</a></li>
-                <li><a title="Time" href="#tab2"><i class="fa-solid fa-clock"></i>Hours</i></a></li>
-              </ul>
-              <div class="tab-content-wrapper">
-
-                <article class="tab-content" id="tab1-content">
-                ${this.generateOptionsForTeam(this._data.curUserDetails)}
-                </article>
-
-                <article class="tab-content" id="tab2-content">
-                  <p>Your Hours</p>
-                  <h3>0.00</h3>
-                </article>
-              </div>
-            </div>  
-          </div>
-    `;
-    }
-    // ${this.generateOptionsForTeam(this._data.queues)};
-    generateOptions(queues) {
-        return queues.spl.map((li, i)=>{
-            if (i < 7) return;
-            if (!li) return;
-            return `
-        <div class="lap-spl-text">
-          <p>${this._data.queues[i]}</p>
-          <h3>${(+li).toFixed(3)}</h3>
-        </div>
-        `;
-        }).join("");
-    }
-    generatehours(queues) {
-        return queues.hours.map((li, i)=>{
-            if (i < 7) return;
-            if (i > 9) return;
-            if (!li) return;
-            let x = 0;
-            const mark = `
-        <div class="lap-spl-text">
-          <p>${this._data.hours[x]}</p>
-          <h3>${(+li).toFixed(1)}</h3>
-        </div>
-        `;
-            x++;
-            return mark;
-        }).join("");
-    }
-    generateOptionsForTeam(queues) {
-        return queues.teamspl.map((li, i)=>{
-            if (i < 3) return;
-            if (!li) return;
-            return `
-        <div class="lap-spl-text">
-          <p>${this._data.queues[i + 4]}</p>
-          <h3>${(+li).toFixed(3) || "NONE"}</h3>
-        </div>
-        `;
-        }).join("");
-    }
-    addHolder() {
-        const child = `<div class="holder"></div>`;
-        this._parentEl.insertAdjacentHTML("afterbegin", child);
-    }
-    _allLinks = document.querySelectorAll(".tabs a");
-    _allTabs = document.querySelectorAll(".tab-content");
-    _tabContentWrapper = document.querySelector(".tab-content-wrapper");
-    _shiftTabs(linkId) {
+    _allTabs = document.querySelectorAll(".tab-content-lb");
+    _allLinks = document.querySelectorAll(".tabs-lb a");
+    _tabContentWrapper = document.querySelector(".tab-content-wrapper-lb");
+    _allTabsTeam = document.querySelectorAll(".tab-content");
+    _allLinksTeam = document.querySelectorAll(".tabs a");
+    _tabContentWrapperTeam = document.querySelector(".tab-content-wrapper");
+    shiftTabs = (linkId)=>{
         this._allTabs.forEach((tab, i)=>{
             if (tab.id.includes(linkId)) this._allTabs.forEach((tabItem)=>{
-                tabItem.style.transform = `translateY(-${i * 300}px)`;
+                tabItem.style = `transform: translateY(-${i * 300}px);`;
             });
         });
-    }
-    _handleLinkClick(elem) {
-        const linkId = elem.id;
-        const hrefLinkClick = elem.href;
-        this._allLinks.forEach((link, i)=>{
-            if (link.href === hrefLinkClick) link.classList.add("active");
-            else link.classList.remove("active");
-        });
-        this._shiftTabs(linkId);
-    }
+    };
     addHandlerSlide() {
         this._parentEl.addEventListener("click", (e)=>{
+            e.preventDefault();
+            const link = e.target.closest(".tabs-lb a");
+            if (!link || link.classList.contains("active")) return;
+            // Remove "active" class from all links
+            this._allLinks.forEach((linkItem)=>{
+                linkItem.classList.remove("active");
+            });
+            // Add "active" class to the clicked link
+            link.classList.add("active");
+            // Get the linkId from the clicked link
+            const linkId = link.id;
+            // Call the shiftTabs method to handle the tab shift
+            this.shiftTabs(linkId);
+        });
+    }
+    shiftTabsTeam = (linkId)=>{
+        this._allTabsTeam.forEach((tab, i)=>{
+            if (tab.id.includes(linkId)) this._allTabsTeam.forEach((tabItem)=>{
+                tabItem.style = `transform: translateY(-${i * 300}px);`;
+            });
+        });
+    };
+    addHandlerSlideTeam() {
+        this._parentEl.addEventListener("click", (e)=>{
+            e.preventDefault();
             const link = e.target.closest(".tabs a");
-            if (!link) return;
-            console.log(link);
-            this._handleLinkClick(link);
+            if (!link || link.classList.contains("active")) return;
+            // Remove "active" class from all links
+            this._allLinksTeam.forEach((linkItem)=>{
+                linkItem.classList.remove("active");
+            });
+            // Add "active" class to the clicked link
+            link.classList.add("active");
+            // Get the linkId from the clicked link
+            const linkId = link.id;
+            // Call the shiftTabs method to handle the tab shift
+            this.shiftTabsTeam(linkId);
         });
     }
 }
-// getQueue() {
-//   let lablersQ = document.querySelector(".Labeler-spl-options").value;
-//   let teamQ = document.querySelector(".team-spl-options").value;
-//   return { lablersQ, teamQ };
-// }
-// addHandlerPickLQ(handler) {
-//   // this._parentEl.addEventListener("click", (e) => {
-//   //   const optionQ = e.target.closest(".labelerBtn");
-//   //   if (!optionQ) return;
-//   const labelerDropdown = this._parentEl.querySelector(
-//     ".Labeler-spl-options"
-//   );
-//   if (labelerDropdown) {
-//     labelerDropdown.addEventListener("change", () => {
-//       const labelersQ = labelerDropdown.value;
-//       console.log(labelersQ);
-//       handler();
-//     });
-//   } else {
-//     console.error("Labeler dropdown element not found.");
-//   }
-//   // }
-// }
-exports.default = new widget();
+exports.default = new Widget();
 
 },{"./View":"gQab5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gQab5":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -1025,7 +985,7 @@ class View {
     _clear() {
         this._parentEl.innerHTML = "";
     }
-    _renderSpinner() {
+    renderSpinner() {
         this._clear();
         const mark = `
       <div class="spinner">
@@ -1033,6 +993,19 @@ class View {
       </div>
     `;
         this._parentEl.insertAdjacentHTML("afterbegin", mark);
+    }
+    renderError(msg) {
+        this._clear();
+        const message = `<p style="color:red">Faild to fetch your data :< Make sure you entered the right date!"</p>`;
+        this._parentEl.insertAdjacentHTML("afterbegin", message);
+    }
+    _hideView(el = this._parentEl) {
+        el.classList.add("opacity-0");
+        el.classList.add("z-drop");
+    }
+    _ShowView(el = this._parentEl) {
+        el.classList.remove("opacity-0");
+        el.classList.remove("z-drop");
     }
 }
 exports.default = View;
@@ -1644,7 +1617,7 @@ class FormView {
         return `
           <h3>Search</h3>
           <div>
-            <input class="log__user" type="text" placeholder="username" />
+            <input class="log__user" type="text" placeholder="Enter an ID" />
           </div>
           <button type="submit" class="log">
           <i class="fa-solid fa-arrow-right-to-bracket"></i>
@@ -1855,6 +1828,127 @@ class FooterView {
 }
 exports.default = new FooterView();
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["bysI2","CE27q"], "CE27q", "parcelRequirea6eb")
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cD0Qp":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _view = require("./View");
+var _viewDefault = parcelHelpers.interopDefault(_view);
+class SplLabelerView extends (0, _viewDefault.default) {
+    _parentEl = document.querySelector(".spl__labeler");
+    _generateMarkup() {
+        return `
+        ${this._generateSpl(this._data.curUserDetails)}
+        `;
+    }
+    _generateSpl(queues) {
+        return queues.spl.map((li, i)=>{
+            if (i < 7) return;
+            if (!li) return;
+            return `
+            <div class="lap-spl-text">
+              <p>${this._data.curUserDetails.curQueue[i] ? this._data.curUserDetails.curQueue[i] : this._data.curUserDetails.curQueue[i - 1] + " QA"}</p>
+              <h3>${(+li).toFixed(3)}</h3>
+            </div>
+            `;
+        }).join("");
+    }
+}
+exports.default = new SplLabelerView();
+
+},{"./View":"gQab5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gIpUh":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _view = require("./View");
+var _viewDefault = parcelHelpers.interopDefault(_view);
+class SplTeamView extends (0, _viewDefault.default) {
+    _parentEl = document.querySelector(".spl__Team");
+    _generateMarkup() {
+        return `
+        ${this._generateSplForTeam(this._data.curUserDetails)}
+        `;
+    }
+    _generateSplForTeam(queues) {
+        return queues.teamspl.map((li, i)=>{
+            if (i < 3) return;
+            if (!li) return;
+            return `
+        <div class="lap-spl-text">
+          <p>${this._data.teamsData.spl[0][i] ? this._data.teamsData.spl[0][i] : this._data.teamsData.spl[0][i - 1] + "QA"}</p>
+          <h3>${(+li).toFixed(3) || "NONE"}</h3>
+        </div>
+        `;
+        }).join("");
+    }
+}
+exports.default = new SplTeamView();
+
+},{"./View":"gQab5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"kRvsV":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _view = require("./View");
+var _viewDefault = parcelHelpers.interopDefault(_view);
+class HoursLabelerView extends (0, _viewDefault.default) {
+    _parentEl = document.querySelector(".hours-labeler");
+    _Hours = [
+        "Lidar",
+        "Image",
+        "ATOT%"
+    ];
+    _generateMarkup() {
+        return `
+        ${this._generatehours(this._data.curUserDetails)}
+        `;
+    }
+    _generatehours(queues) {
+        return queues.hours.map((li, i)=>{
+            if (i < 7) return;
+            if (i > 9) return;
+            if (!li) return;
+            const mark = `
+        <div class="lap-spl-text">
+          <p>${this._Hours[i - 7]}</p>
+          <h3>${isNaN(li) ? li : (+li).toFixed(1)} </h3>
+        </div>
+        `;
+            return mark;
+        }).join("");
+    }
+}
+exports.default = new HoursLabelerView();
+
+},{"./View":"gQab5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6WDT6":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _view = require("./View");
+var _viewDefault = parcelHelpers.interopDefault(_view);
+class HoursTeamView extends (0, _viewDefault.default) {
+    _parentEl = document.querySelector(".hours-Team");
+    _Hours = [
+        "Lidar",
+        "Image",
+        "ATOT%"
+    ];
+    _generateMarkup() {
+        return `
+        ${this._generatehours(this._data.curUserDetails)}
+        `;
+    }
+    _generatehours(queues) {
+        return queues.teamHours.map((li, i)=>{
+            if (i < 3) return;
+            if (!li) return;
+            const mark = `
+        <div class="lap-spl-text">
+          <p>${this._Hours[i - 3]}</p>
+          <h3>${isNaN(li) ? li : (+li).toFixed(1)} </h3>
+        </div>
+        `;
+            return mark;
+        }).join("");
+    }
+}
+exports.default = new HoursTeamView();
+
+},{"./View":"gQab5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["bWQjm","CE27q"], "CE27q", "parcelRequirea6eb")
 
 //# sourceMappingURL=index.0ddfc6e7.js.map

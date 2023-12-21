@@ -57,7 +57,7 @@ const controlFormClose = function () {
 };
 
 const controlSpl = async function () {
-  try {
+
     const { month, day } = DateView.getDate();
 
     SplTabView.renderSpinner();
@@ -92,9 +92,7 @@ const controlSpl = async function () {
 
     WidgetView._hideView(document.querySelector(".holder"));
     WidgetView._ShowView(document.querySelector(".widget-con"));
-  } catch (err) {
-    console.error(err);
-  }
+
 };
 
 const controlLogout = function () {
